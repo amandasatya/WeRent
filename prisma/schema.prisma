@@ -22,3 +22,15 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
+
+model Product {
+  product_id        Int     @id @default(autoincrement())
+  product_name      String
+  product_desc      String
+  size              String
+  price             Int
+  product_pictures  Bytes?
+  product_rating    Int
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+}
