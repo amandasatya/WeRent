@@ -34,3 +34,19 @@ model Product {
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
 }
+
+
+enum Scale {
+  Small
+  Fit
+  Large
+}
+model Review {
+  review_id Int @id @default(autoincrement())
+  product_id Int
+  user_id Int
+  description String
+  fit_scale Scale
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
