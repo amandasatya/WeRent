@@ -21,4 +21,36 @@ model User {
   password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  reviews   Review[]
+}
+
+model Product {
+  product_id        Int     @id @default(autoincrement())
+  product_name      String
+  product_desc      String
+  sizes             String[]
+  price             Int
+  product_pictures  Bytes?
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+  reviews   Review[]
+}
+
+
+enum Scale {
+  Small
+  Fit
+  Large
+}
+model Review {
+  review_id Int @id @default(autoincrement())
+  product_id Int
+  user_id Int
+  description String
+  fit_scale Scale
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  product Product   @relation(fields: [product_id], references: [product_id])
+  user    User      @relation(fields: [user_id], references: [id])
 }
