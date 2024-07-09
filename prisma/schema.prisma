@@ -13,7 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id        Int       @id @default(autoincrement())
   username  String    @unique
@@ -22,6 +21,7 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   reviews   Review[]
+  ratings   Rating[]
 }
 
 model Product {
@@ -33,24 +33,39 @@ model Product {
   product_pictures  Bytes?
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
-  reviews   Review[]
+  reviews           Review[]
+  ratings           Rating[]
 }
-
 
 enum Scale {
   Small
   Fit
   Large
 }
-model Review {
-  review_id Int @id @default(autoincrement())
-  product_id Int
-  user_id Int
-  description String
-  fit_scale Scale
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
 
-  product Product   @relation(fields: [product_id], references: [product_id])
-  user    User      @relation(fields: [user_id], references: [id])
+model Review {
+  review_id   Int      @id @default(autoincrement())
+  product_id  Int
+  user_id     Int
+  description String
+  fit_scale   Scale
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  product     Product  @relation(fields: [product_id], references: [product_id])
+  user        User     @relation(fields: [user_id], references: [id])
+  ratings     Rating[]
+}
+
+model Rating {
+  user_id    Int
+  product_id Int
+  value      Int
+  review_id  Int
+
+  user       User     @relation(fields: [user_id], references: [id])
+  product    Product  @relation(fields: [product_id], references: [product_id])
+  review     Review   @relation(fields: [review_id], references: [review_id])
+
+  @@id([user_id, product_id, review_id])
 }
