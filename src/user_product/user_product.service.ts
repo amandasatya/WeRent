@@ -6,7 +6,7 @@ import { CreateUserProductDto } from './dto/user_product.dto';
 export class UserProductService {
     constructor ( private prismaService: PrismaService ) {}
 
-    async create (dto: CreateUserProductDto) {
+    async create(dto: CreateUserProductDto) {
         return this.prismaService.userProduct.create({
             data: dto,
         });
@@ -27,7 +27,7 @@ export class UserProductService {
     async remove(user_id: number, product_id: number) {
         return this.prismaService.userProduct.delete({
           where: {
-            user_id_product_id: { user_id, product_id },
+            user_id_product_id: { user_id, product_id }, 
           },
         });
       }

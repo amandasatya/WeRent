@@ -7,22 +7,22 @@ export class UserProductController {
   constructor(private readonly userProductService: UserProductService) {}
 
   @Post()
-  create(@Body() createUserProductDto: CreateUserProductDto) {
+  async create(@Body() createUserProductDto: CreateUserProductDto) {
     return this.userProductService.create(createUserProductDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.userProductService.findAll();
   }
 
-  @Get(':user_id/:product_id')
-  findOne(@Param('user_id') user_id: string, @Param('product_id') product_id: string) {
-    return this.userProductService.findOne(+user_id, +product_id);
+  @Get(':id/:product_id')
+  async findOne(@Param('id') id: string, @Param('product_id') product_id: string) {
+    return this.userProductService.findOne(+id, +product_id);
   }
 
-  @Delete(':user_id/:product_id')
-  remove(@Param('user_id') user_id: string, @Param('product_id') product_id: string) {
-    return this.userProductService.remove(+user_id, +product_id);
+  @Delete(':id/:product_id')
+  async remove(@Param('id') id: string, @Param('product_id') product_id: string) {
+    return this.userProductService.remove(+id, +product_id);
   }
 }
