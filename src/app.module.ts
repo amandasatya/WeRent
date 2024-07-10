@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { AuthModule } from './authentication/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
@@ -6,12 +7,15 @@ import { PassportModule } from '@nestjs/passport';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
+import { ReviewModule } from './reviews/review.module';
+import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   imports: [
     AuthModule,
     PrismaModule,
     ProductModule,
+    ReviewModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET_KEY,
@@ -19,6 +23,6 @@ import { ProductModule } from './product/product.module';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}

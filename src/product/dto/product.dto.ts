@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prettier/prettier */
 import  { IsNotEmpty, IsString, IsInt, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
 import { serialize } from 'v8';
 
