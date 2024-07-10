@@ -33,6 +33,7 @@ export class ProductService {
       where: { product_id: id },
       data: {
         ...rest,
+        sizes: sizes? { set: sizes} : undefined,
       },
     });
   }
