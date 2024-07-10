@@ -7,7 +7,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 export class ProductService {
   constructor(private prismaService: PrismaService) {}
 
-  async create(dto: CreateProductDto) {
+  async create(dto: CreateProductDto, user: any) {
     const { sizes, ...rest } = dto;
     return this.prismaService.product.create({
       data: {
