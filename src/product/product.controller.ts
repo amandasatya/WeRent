@@ -3,8 +3,8 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PricePipe } from './pipes/price.pipe';
-import { JwtAuthGuard } from '../authentication/guard/jwt_auth.guard'
-import { User } from '../authentication/user.decorator'
+import { JwtAuthGuard } from '../authentication/guard/jwt_auth.guard';
+import { User } from '../authentication/user.decorator';
 
 @Controller('product')
 export class ProductController {
@@ -16,14 +16,14 @@ export class ProductController {
     return this.productService.create(createProductDto, user);
   }
 
-  @UseGuards(JwtAuthGuard)
+
   @Get()
   @UsePipes(new ParseIntPipe(), new PricePipe())
   findAll() {
     return this.productService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
+
   @Get(':id')
   @UsePipes(new ParseIntPipe(), new PricePipe())
   findOne(@Param('id') id: string) {
@@ -41,4 +41,5 @@ export class ProductController {
   remove(@Param('id') id: string) {
     return this.productService.remove(+id);
   }
+
 }
