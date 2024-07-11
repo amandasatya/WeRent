@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IsInt, IsNotEmpty, Min, Max } from 'class-validator';
 
 export class ProductRatingDto {
@@ -8,10 +9,6 @@ export class ProductRatingDto {
   @IsInt()
   @IsNotEmpty()
   productId: number;
-
-  //   @IsInt()
-  //   @IsNotEmpty()
-  //   reviewId: number;
 
   @IsInt()
   @IsNotEmpty()
