@@ -15,10 +15,6 @@ export class ProductRatingService {
       value: value,
     };
 
-    // if (reviewId) {
-    //   data.review = { connect: { id: reviewId } };
-    // }
-
     return this.prisma.rating.create({ data });
   }
 
@@ -28,7 +24,7 @@ export class ProductRatingService {
       include: {
         user: true,
         product: true,
-        // review: true,
+
       },
     });
   }

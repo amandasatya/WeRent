@@ -6,16 +6,6 @@ import { CreateUserProductDto } from './dto/user_product.dto';
 export class UserProductController {
   constructor(private readonly userProductService: UserProductService) {}
 
-  @Post()
-  async create(@Body() createUserProductDto: CreateUserProductDto) {
-    return this.userProductService.create(createUserProductDto);
-  }
-
-  @Get()
-  async findAll() {
-    return this.userProductService.findAll();
-  }
-
   @Get(':id/:product_id')
   async findOne(@Param('id') id: string, @Param('product_id') product_id: string) {
     return this.userProductService.findOne(+id, +product_id);
