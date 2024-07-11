@@ -23,7 +23,6 @@ export class ReviewController {
     return this.reviewService.getReviews();
   }
 
-
   @Get(':id')
   async getReviewById(@Param('id') id: string): Promise<Review> {
     return this.reviewService.getReviewById(+id);
