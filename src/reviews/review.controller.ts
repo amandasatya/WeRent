@@ -5,6 +5,7 @@ import { Review } from '@prisma/client';
 import { CreateReviewDto } from './dto/review-create.dto';
 import { UpdateReviewDto } from './dto/review-update.dto';
 import { JwtAuthGuard } from 'src/authentication/guard/jwt_auth.guard';
+import { User } from '../authentication/user.decorator';
 
 @Controller('reviews')
 export class ReviewController {
@@ -12,17 +13,17 @@ export class ReviewController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  async createReview(@Body() createReviewDto: CreateReviewDto): Promise<Review> {
-    return this.reviewService.createReview(createReviewDto);
+  async createReview(@Body() createReviewDto: CreateReviewDto, @User() user): Promise<Review> {
+    return this.reviewService.createReview(createReviewDto, user);
   }
 
-  @UseGuards(JwtAuthGuard)
+
   @Get()
   async getReviews(): Promise<Review[]> {
     return this.reviewService.getReviews();
   }
 
-  @UseGuards(JwtAuthGuard)
+
   @Get(':id')
   async getReviewById(@Param('id') id: string): Promise<Review> {
     return this.reviewService.getReviewById(+id);

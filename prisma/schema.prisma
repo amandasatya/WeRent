@@ -46,7 +46,7 @@ enum Scale {
 }
 
 model Review {
-  review_id   Int      @default(autoincrement())
+  review_id   Int     @id @default(autoincrement()) @unique
   product_id  Int
   user_id     Int
   description String
@@ -57,7 +57,7 @@ model Review {
   product     Product  @relation(fields: [product_id], references: [product_id])
   user        User     @relation(fields: [user_id], references: [id])
 
-  @@id([user_id, product_id])
+  @@unique([user_id, product_id])
 }
 
 model Rating {
