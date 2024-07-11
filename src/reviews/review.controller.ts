@@ -16,13 +16,13 @@ export class ReviewController {
     return this.reviewService.createReview(createReviewDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get()
   async getReviews(): Promise<Review[]> {
     return this.reviewService.getReviews();
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get(':id')
   async getReviewById(@Param('id') id: string): Promise<Review> {
     return this.reviewService.getReviewById(+id);
