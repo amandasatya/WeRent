@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { ProductRatingService } from './product_rating.service';
 import { ProductRatingDto } from './dto/product_rating.dto';
@@ -12,7 +13,7 @@ export class ProductRatingController {
   }
 
   @Get('product/:productId')
-  async getRatingsForProduct(@Param('productId') productId: number) {
+  async getRatingsForProduct(@Param('product_id') productId: number) {
     return this.ratingService.getRatingsForProduct(productId);
   }
 }

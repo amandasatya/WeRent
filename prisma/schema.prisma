@@ -59,7 +59,6 @@ model Review {
   user        User     @relation(fields: [user_id], references: [id])
 
   @@unique ([user_id, product_id])
-
 }
 
 model Rating {
@@ -81,4 +80,5 @@ model UserProduct {
   product    Product @relation(fields: [product_id], references: [product_id])
 
   @@id([user_id, product_id])
+  // @@unique([user_id, product_id])
 }
