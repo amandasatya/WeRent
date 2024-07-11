@@ -11,7 +11,7 @@ import { UpdateReviewDto } from './dto/review-update.dto';
 export class ReviewService {
   constructor(private prisma: PrismaService) {}
 
-  async createReview(data: CreateReviewDto): Promise<Review> {
+  async createReview(data: CreateReviewDto, user: any): Promise<Review> {
     return this.prisma.review.create({
       data,
     });

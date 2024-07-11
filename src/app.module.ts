@@ -12,6 +12,7 @@ import { ProductRatingModule } from './rating/product_rating.module';
 
 import { ReviewModule } from './reviews/review.module';
 import { PrismaService } from './prisma/prisma.service';
+import { WeRentModule } from './we-rent/we-rent.module';
 
 
 @Module({
@@ -29,6 +30,7 @@ import { PrismaService } from './prisma/prisma.service';
       secret: process.env.JWT_SECRET_KEY,
       signOptions: { expiresIn: '60m' },
     }),
+    WeRentModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
