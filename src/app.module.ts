@@ -10,8 +10,8 @@ import { ProductModule } from './product/product.module';
 import { ProductRatingModule } from './rating/product_rating.module';
 import { ReviewModule } from './reviews/review.module';
 import { PrismaService } from './prisma/prisma.service';
-import { WeRentModule } from './we-rent/we-rent.module';
 import { UserProductModule } from './user_product/user_product.module';
+
 
 
 @Module({
@@ -28,7 +28,6 @@ import { UserProductModule } from './user_product/user_product.module';
       secret: process.env.JWT_SECRET_KEY,
       signOptions: { expiresIn: '60m' },
     }),
-    WeRentModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

@@ -16,13 +16,16 @@ export class AuthService {
 
   async register(username: string, email: string, password: string): Promise<any> {
     try {
-      console.log('Password reciever:', password)
       const hashedPassword = await bcrypt.hash(password, 10);
-      console.log('Hashed password:', hashedPassword)
       const user = await this.prisma.user.create({
         data: { username, email, password: hashedPassword },
       });
-      return user;
+
+      const payload = { email: user.email, sub: user.id};
+      const accessToken = this.jwtService.sign(payload)
+
+
+      return {user, access_token: accessToken};
     } catch (error) {
       this.logger.error(`Failed to register user: ${error.message}`);
       throw error;

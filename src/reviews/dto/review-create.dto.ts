@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { IsNotEmpty, IsString, IsEnum, IsInt } from 'class-validator';
+import { IsNotEmpty, IsString, IsEnum, IsInt, IsOptional } from 'class-validator';
 import { Scale } from '@prisma/client';
 
 export class CreateReviewDto {
@@ -12,7 +12,7 @@ export class CreateReviewDto {
   user_id: number;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   description: string;
 
   @IsEnum(Scale)

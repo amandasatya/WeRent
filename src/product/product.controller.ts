@@ -13,8 +13,8 @@ export class ProductController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createProductDto: CreateProductDto, @User() user) {
-    return this.productService.create(createProductDto, user);
+  create(@Body() createProductDto: CreateProductDto) {
+    return this.productService.create(createProductDto);
   }
 
 
