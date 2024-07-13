@@ -5,12 +5,13 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { User } from '../authentication/user.decorator';
 
 @Injectable()
 export class ProductService {
   constructor(private prismaService: PrismaService) {}
 
-  async create(dto: CreateProductDto, user: any) {
+  async create(dto: CreateProductDto) {
     const { sizes, ...rest } = dto;
     return this.prismaService.product.create({
       data: {
