@@ -9,7 +9,7 @@ async function bootstrap() {
   
   dotenv.config();
   const app = await NestFactory.create(AppModule, {cors: true});
-  app.enableCors();
+
   // swagger configuration
   const config = new DocumentBuilder()
     .setTitle('WeRent API Test Documentation')
