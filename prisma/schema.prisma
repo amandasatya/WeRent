@@ -1,11 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
@@ -15,64 +9,52 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  username  String    @unique
-  email     String    @unique
-  password  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  reviews   Review[]
-  ratings   Rating[]
-  user_products  UserProduct[]
-
+  id            Int           @id @default(autoincrement())
+  username      String        @unique
+  email         String        @unique
+  password      String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  ratings       Rating[]
+  reviews       Review[]
+  user_products UserProduct[]
 }
 
 model Product {
-  product_id        Int     @id @default(autoincrement())
-  product_name      String
-  product_desc      String
-  sizes             String[]
-  price             Int
-  product_pictures  Bytes?
-  product_videos    Bytes?
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
-  reviews           Review[]
-  ratings           Rating[]
-  userProducts      UserProduct[]
-
-
-}
-
-enum Scale {
-  Small
-  Fit
-  Large
+  product_id       Int           @id @default(autoincrement())
+  product_name     String
+  product_desc     String
+  sizes            String[]
+  price            Int
+  product_pictures Bytes?
+  created_at       DateTime      @default(now())
+  updated_at       DateTime      @updatedAt
+  product_videos   Bytes?
+  ratings          Rating[]
+  reviews          Review[]
+  userProducts     UserProduct[]
 }
 
 model Review {
-
-  review_id   Int      @id @default(autoincrement()) @unique
+  review_id   Int      @id @unique @default(autoincrement())
   product_id  Int
   user_id     Int
   description String
   fit_scale   Scale
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
   product     Product  @relation(fields: [product_id], references: [product_id])
   user        User     @relation(fields: [user_id], references: [id])
 
-  @@unique ([user_id, product_id])
+  @@unique([user_id, product_id])
 }
 
 model Rating {
   user_id    Int
   product_id Int
   value      Int
-
-  user       User     @relation(fields: [user_id], references: [id])
-  product    Product  @relation(fields: [product_id], references: [product_id])
+  product    Product @relation(fields: [product_id], references: [product_id])
+  user       User    @relation(fields: [user_id], references: [id])
 
   @@id([user_id, product_id])
 }
@@ -80,10 +62,14 @@ model Rating {
 model UserProduct {
   user_id    Int
   product_id Int
-
-  user       User    @relation(fields: [user_id], references: [id])
   product    Product @relation(fields: [product_id], references: [product_id])
+  user       User    @relation(fields: [user_id], references: [id])
 
   @@id([user_id, product_id])
-  // @@unique([user_id, product_id])
+}
+
+enum Scale {
+  Small
+  Fit
+  Large
 }

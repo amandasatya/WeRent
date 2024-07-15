@@ -20,9 +20,9 @@ export class ProductController {
 
   // @UseGuards(JwtAuthGuard)
   @Post(':product_id/upload')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return this.productService.uploadFile(file);
+  @UseInterceptors(FileInterceptor('product_pictures'))
+  uploadFile(@Param('product_id', ParseIntPipe) product_id: number, @UploadedFile() file: Express.Multer.File) {
+    return this.productService.uploadFile(product_id, file);
   }
 
 
