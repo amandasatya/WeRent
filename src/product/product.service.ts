@@ -12,17 +12,23 @@ export class ProductService {
   constructor(private prismaService: PrismaService) {}
 
   async create(dto: CreateProductDto) {
-    const { sizes, ...rest } = dto;
+    const { sizes, ...rest} = dto;
     return this.prismaService.product.create({
       data: {
         ...rest,
         sizes: { set: sizes },
+
       },
     });
   }
 
-  async uploadFile(file: Express.Multer.File) {
-    return {message: ' File Uploaded successfully', file};
+  async uploadFile(product_id: number, file: Express.Multer.File) {
+    return this.prismaService.product.update({
+      where: { product_id },
+      data: {
+        product_pictures: file.buffer,
+      },
+    });
   }
 
   async findAll() {
