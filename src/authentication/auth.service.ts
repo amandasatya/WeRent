@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -15,6 +15,22 @@ export class AuthService {
 
 
   async register(username: string, email: string, password: string): Promise<any> {
+
+    
+    const existingUser =  await this.prisma.user.findFirst({
+      where: {
+        OR: [{ username }, { email }]
+      },
+    });
+
+      if(existingUser) {
+        if (existingUser.username === username) {
+          throw new ConflictException('Username already in use')
+        } else {
+          throw new ConflictException('Email already in use')
+        }
+      }
+      
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await this.prisma.user.create({
@@ -34,6 +50,7 @@ export class AuthService {
 
 
   async login(email: string, password: string): Promise<any> {
+
     const user = await this.prisma.user.findUnique({ where: { email } });
 
     if (!user) {

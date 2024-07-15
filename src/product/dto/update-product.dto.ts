@@ -1,30 +1,34 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
+
 import { PartialType } from '@nestjs/mapped-types';
-import { IsNotEmpty, IsInt, IsString, IsArray, ArrayNotEmpty, IsOptional } from 'class-validator';
+import { IsOptional, IsString, IsInt, IsArray, ArrayNotEmpty, Validate } from 'class-validator';
+import { MaxFileSizeValidator } from '../validator/size.validator';
 import { CreateProductDto } from './product.dto';
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {
+  @IsOptional()
+  @IsString()
+  product_name?: string;
 
-    @IsOptional()
-    @IsString()
-    product_name?: string;
-  
-    @IsOptional()
-    @IsString()
-    product_desc?: string;
+  @IsOptional()
+  @IsString()
+  product_desc?: string;
 
-    @IsOptional()
-    @IsArray()
-    @IsString({ each: true })
-    sizes?: string[];
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  sizes?: string[];
 
-    @IsOptional()
-    @IsInt()
-    price?: number;
+  @IsOptional()
+  @IsInt()
+  price?: number;
 
-    @IsOptional()
-    product_pictures?: Buffer;
+  @IsOptional()
+  @Validate(MaxFileSizeValidator, [2 * 1024 * 1024])
+  product_pictures?: Buffer;
 
+  @IsOptional()
+  @Validate(MaxFileSizeValidator, [2 * 1024 * 1024])
+  product_videos?: Buffer;
 }
