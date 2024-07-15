@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
 import {
   IsNotEmpty,
   IsString,
@@ -7,8 +6,11 @@ import {
   IsOptional,
   IsArray,
   ArrayNotEmpty,
+  Validate,
 } from 'class-validator';
 import { serialize } from 'v8';
+import { Transform }  from 'class-transformer';
+import { MaxFileSizeValidator } from '../validator/size.validator';
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -29,8 +31,11 @@ export class CreateProductDto {
   price: number;
 
   @IsOptional()
+  @Validate(MaxFileSizeValidator, [2 * 1024 * 1024])
   product_pictures?: Buffer;
 
-  review: string;
-  rating: number;
+  @IsOptional()
+  @Validate(MaxFileSizeValidator, [2 * 1024 * 1024])
+  product_videos?: Buffer;
+
 }

@@ -21,6 +21,10 @@ export class ProductService {
     });
   }
 
+  async uploadFile(file: Express.Multer.File) {
+    return {message: ' File Uploaded successfully', file};
+  }
+
   async findAll() {
     return this.prismaService.product.findMany();
   }

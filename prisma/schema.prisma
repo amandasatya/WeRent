@@ -23,7 +23,8 @@ model User {
   updatedAt DateTime  @updatedAt
   reviews   Review[]
   ratings   Rating[]
-  products  UserProduct[]
+  user_products  UserProduct[]
+
 }
 
 model Product {
@@ -33,11 +34,14 @@ model Product {
   sizes             String[]
   price             Int
   product_pictures  Bytes?
+  product_videos    Bytes?
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
   reviews           Review[]
   ratings           Rating[]
   userProducts      UserProduct[]
+
+
 }
 
 enum Scale {
