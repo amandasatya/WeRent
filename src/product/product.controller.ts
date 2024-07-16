@@ -20,8 +20,8 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { PricePipe } from './pipes/price.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '../authentication/guard/jwt_auth.guard';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import { writeFile, mkdir } from 'fs/promises';
+import { join, dirname } from 'path';
 import * as fs from 'fs';
 import { Product } from '@prisma/client';
 
@@ -79,6 +79,9 @@ export class ProductController {
       await this.productService.uploadFile(product_id, base64String, 'video');
 
       const filePath = join(__dirname, '..', '..', 'uploads', product_videos.originalname);
+
+      await mkdir(dirname(filePath), { recursive: true });
+
       await writeFile(filePath, product_videos.buffer);
 
       return { message: 'File uploaded successfully.' };
