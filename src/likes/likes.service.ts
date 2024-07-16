@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -15,21 +14,15 @@ export class LikeService {
     });
   }
 
-  async removeLike(like_id: number, review_id: number) {
+  async removeLike(likeId: number) {
     return this.prisma.like.delete({
-      where: { like_id: like_id },
+      where: { like_id: likeId },
     });
   }
 
-  async getLikesByReview(review_id: number) {
+  async getLikesByReview(reviewId: number) {
     return this.prisma.like.findMany({
-      where: { review_id: review_id },
-    });
-  }
-
-  async getLikesByUser(user_id: number) {
-    return this.prisma.like.findMany({
-      where: { user_id: user_id },
+      where: { review_id: reviewId },
     });
   }
 }

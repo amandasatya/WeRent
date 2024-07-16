@@ -1,8 +1,6 @@
-/* eslint-disable prettier/prettier */
-import { Controller, Post, Delete, Param, Body, Get } from '@nestjs/common';
+import { Controller, Post, Delete, Get, Param, Body } from '@nestjs/common';
 import { LikeService } from './likes.service';
 import { CreateLikeDto } from './dto/like-create.dto';
-import { DeleteLikeDto } from './dto/like-delete.dto';
 
 @Controller('likes')
 export class LikeController {
@@ -13,18 +11,13 @@ export class LikeController {
     return this.likeService.createLike(createLikeDto.user_id, createLikeDto.review_id);
   }
 
-  @Delete()
-  remove(@Body() deleteLikeDto: DeleteLikeDto) {
-    return this.likeService.removeLike(deleteLikeDto.user_id, deleteLikeDto.review_id);
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.likeService.removeLike(+id);
   }
 
   @Get('review/:reviewId')
-  findByReview(@Param('reviewId') review_id: string) {
-    return this.likeService.getLikesByReview(+review_id);
-  }
-
-  @Get('user/:userId')
-  findByUser(@Param('userId') user_id: string) {
-    return this.likeService.getLikesByUser(+user_id);
+  findByReview(@Param('reviewId') reviewId: string) {
+    return this.likeService.getLikesByReview(+reviewId);
   }
 }
