@@ -18,6 +18,7 @@ model User {
   ratings       Rating[]
   reviews       Review[]
   user_products UserProduct[]
+  likes         Like[]
 }
 
 model Product {
@@ -45,7 +46,8 @@ model Review {
   updatedAt   DateTime @updatedAt
   product     Product  @relation(fields: [product_id], references: [product_id])
   user        User     @relation(fields: [user_id], references: [id])
-
+  likes       Like[]
+  
   @@unique([user_id, product_id])
 }
 
@@ -72,4 +74,15 @@ enum Scale {
   Small
   Fit
   Large
+}
+
+model Like {
+  like_id   Int @id @default(autoincrement())
+  user_id   Int
+  review_id Int
+
+  user   User   @relation(fields: [user_id], references: [id])
+  review Review @relation(fields: [review_id], references: [review_id])
+
+   @@unique([user_id, review_id])
 }

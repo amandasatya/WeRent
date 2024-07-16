@@ -12,7 +12,7 @@ import { ReviewModule } from './reviews/review.module';
 import { PrismaService } from './prisma/prisma.service';
 import { UserProductModule } from './user_product/user_product.module';
 import { ConfigModule } from '@nestjs/config';
-
+import { LikeModule } from './likes/likes.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,6 +24,7 @@ import { ConfigModule } from '@nestjs/config';
     ProductRatingModule,
     UserProductModule,
     ReviewModule,
+    LikeModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET_KEY,
