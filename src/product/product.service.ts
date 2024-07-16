@@ -41,18 +41,12 @@ export class ProductService {
       const response = await axios({
         url: imageUrl,
         method: 'GET',
-        responseType: 'stream',
+        responseType: 'arraybuffer',
       });
 
-      const imagePath = path.resolve(__dirname, '..', '..', 'uploads', `${Date.now()}-image.jpg`);
-      const writer = fs.createWriteStream(imagePath);
+      const buffer = Buffer.from(response.data, 'binary');
+      return buffer.toString('base64');
 
-      response.data.pipe(writer);
-
-      return new Promise((resolve, reject) => {
-        writer.on('finish', () => resolve(imagePath));
-        writer.on('error', (error) => reject(error));
-      });
     } catch (error) {
       throw new HttpException('Failed to download image', HttpStatus.INTERNAL_SERVER_ERROR);
     }

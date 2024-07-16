@@ -36,60 +36,7 @@ export class ProductController {
     return await this.productService.create(createProductDto);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Patch(':product_id/upload-picture')
-  @UseInterceptors(FileInterceptor('product_pictures'))
-  async uploadFile(
-    @Param('product_id', ParseIntPipe) product_id: number,
-    @UploadedFile() product_pictures: Express.Multer.File) {
-
-    console.log('File uploaded:', product_pictures);
-    try {
-      if (!product_pictures || !product_pictures.buffer) {
-        throw new HttpException('file or file buffer is undefined.', HttpStatus.BAD_REQUEST);
-      }
-
-      const base64String = product_pictures.buffer.toString('base64');
-      await this.productService.uploadFile(product_id, base64String, 'picture');
-
-      const filePath = join(__dirname, '..', '..', 'uploads', product_pictures.originalname);
-      await writeFile(filePath, product_pictures.buffer);
-
-      return { message: 'File uploaded successfully.' };
-    } catch (error) {
-      console.error('Upload file error:', error);
-      throw new HttpException(`Failed to upload file: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Patch(':product_id/upload-video')
-  @UseInterceptors(FileInterceptor('product_videos'))
-  async uploadVideo(
-    @Param('product_id', ParseIntPipe) product_id: number,
-    @UploadedFile() product_videos: Express.Multer.File) {
-
-    console.log('File uploaded:', product_videos);
-    try {
-      if (!product_videos || !product_videos.buffer) {
-        throw new HttpException('file or file buffer is undefined.', HttpStatus.BAD_REQUEST);
-      }
-
-      const base64String = product_videos.buffer.toString('base64');
-      await this.productService.uploadFile(product_id, base64String, 'video');
-
-      const filePath = join(__dirname, '..', '..', 'uploads', product_videos.originalname);
-
-      await mkdir(dirname(filePath), { recursive: true });
-
-      await writeFile(filePath, product_videos.buffer);
-
-      return { message: 'File uploaded successfully.' };
-    } catch (error) {
-      console.error('Upload file error:', error);
-      throw new HttpException(`Failed to upload file: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
+  
 
   @UseGuards(JwtAuthGuard)
   @Patch(':product_id/upload-url')
@@ -111,8 +58,6 @@ export class ProductController {
       throw new HttpException(`Failed to upload file: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
-
 
 
   @Get()
