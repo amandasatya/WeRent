@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { serialize } from 'v8';
 import { Transform }  from 'class-transformer';
-import { MaxFileSizeValidator } from '../validator/size.validator';
+import { MaxFileSize } from '../validator/size.validator';
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -31,11 +31,13 @@ export class CreateProductDto {
   price: number;
 
   @IsOptional()
-  @Validate(MaxFileSizeValidator, [2 * 1024 * 1024])
-  product_pictures?: Buffer;
+  @IsString()
+  @Validate(MaxFileSize, [2 * 1024 * 1024])
+  product_pictures?: string;
 
   @IsOptional()
-  @Validate(MaxFileSizeValidator, [2 * 1024 * 1024])
-  product_videos?: Buffer;
+  @IsString()
+  @Validate(MaxFileSize, [5 * 1024 * 1024])
+  product_videos?: string;
 
 }

@@ -26,9 +26,9 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
 
   @IsOptional()
   @Validate(MaxFileSizeValidator, [2 * 1024 * 1024])
-  product_pictures?: Buffer;
+  product_pictures?: string;
 
   @IsOptional()
-  @Validate(MaxFileSizeValidator, [2 * 1024 * 1024])
-  product_videos?: Buffer;
+  @Validate(MaxFileSizeValidator, [5 * 1024 * 1024])
+  product_videos?: string;
 }
