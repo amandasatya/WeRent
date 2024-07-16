@@ -27,10 +27,10 @@ model Product {
   product_desc     String
   sizes            String[]
   price            Int
-  product_pictures Bytes?
+  product_pictures String?
+  product_videos   String?
   created_at       DateTime      @default(now())
   updated_at       DateTime      @updatedAt
-  product_videos   Bytes?
   ratings          Rating[]
   reviews          Review[]
   userProducts     UserProduct[]
