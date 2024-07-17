@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma, Review } from '@prisma/client';
 import { CreateReviewDto } from './dto/review-create.dto';
@@ -18,25 +18,55 @@ export class ReviewService {
   }
 
   async getReviews(): Promise<Review[]> {
-    return this.prisma.review.findMany();
+    return this.prisma.review.findMany({
+      include: {
+        product: true,
+        likes: true,
+        user: true,
+      }
+    });
   }
 
   async getReviewById(review_id: number): Promise<Review> {
-    return this.prisma.review.findUnique({
+    const review = await this.prisma.review.findUnique({
       where: { review_id },
+      include: {
+        product: true,
+        likes: true,
+        user: true,
+      }
     });
+
+    if (!review) {
+      throw new NotFoundException(`Review with id ${review_id} not found`);
+    }
+
+    return review;
   }
 
   async updateReview(review_id: number, data: UpdateReviewDto): Promise<Review> {
     return this.prisma.review.update({
       where: { review_id },
       data,
+      include: {
+        product: true,
+        likes: true,
+        user: true,
+      },
     });
   }
 
   async deleteReview(review_id: number): Promise<Review> {
-    return this.prisma.review.delete({
-      where: { review_id },
+    await this.prisma.like.deleteMany({
+      where: { review_id: review_id,},
     });
+
+    try {
+      return await this.prisma.review.delete({
+        where: { review_id: review_id },
+      });
+    } catch (error) {
+      throw new NotFoundException(`Review with id ${review_id} not found`);
+    }
   }
 }
