@@ -85,12 +85,21 @@ export class ProductService {
   }
 
   async findAll() {
-    return this.prismaService.product.findMany();
+    return this.prismaService.product.findMany({
+      include: {
+        ratings: true,
+        reviews: true,
+      }
+    });
   }
 
   async findOne(id: number): Promise<Product> {
     return this.prismaService.product.findUnique({
       where: { product_id: id },
+      include: {
+        ratings: true,
+        reviews: true,
+      }
     });
   }
 
