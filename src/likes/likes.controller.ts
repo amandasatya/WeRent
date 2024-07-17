@@ -13,7 +13,7 @@ export class LikeController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createLikeDto: CreateLikeDto) {
     try {
-      return await this.likeService.createLike(createLikeDto.user_id, createLikeDto.review_id);
+      return this.likeService.createLike(createLikeDto.user_id, createLikeDto.review_id);
     } catch (error) {
       throw new BadRequestException(error.message);
     }
