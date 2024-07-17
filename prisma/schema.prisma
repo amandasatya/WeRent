@@ -52,14 +52,18 @@ model Review {
 }
 
 model Rating {
-  user_id    Int
-  product_id Int
-  value      Int
-  product    Product @relation(fields: [product_id], references: [product_id])
-  user       User    @relation(fields: [user_id], references: [id])
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  product_id  Int
+  ratingValue      Int
+  createdAt  DateTime @default(now())
 
-  @@id([user_id, product_id])
+  user       User     @relation(fields: [userId], references: [id])
+  product    Product  @relation(fields: [product_id], references: [product_id])
+
+  @@unique([userId, product_id])
 }
+
 
 model UserProduct {
   user_id    Int
