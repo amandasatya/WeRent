@@ -74,8 +74,9 @@ export class LikeService {
   }
 
   async getLikesByUser(user_id: number) {
-    return this.prisma.like.findMany({
+    const likesCount = await this.prisma.like.count({
       where: { user_id: user_id },
-    });
+    })
+    return {user_id, likesCount}
   }
 }
