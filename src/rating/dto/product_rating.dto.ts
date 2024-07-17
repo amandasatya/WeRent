@@ -8,11 +8,11 @@ export class ProductRatingDto {
 
   @IsInt()
   @IsNotEmpty()
-  productId: number;
+  product_id: number;
 
   @IsInt()
   @IsNotEmpty()
   @Min(1)
   @Max(5)
-  value: number;
+  ratingValue: number;
 }

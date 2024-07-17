@@ -12,8 +12,13 @@ export class ProductRatingController {
     return this.ratingService.createRating(ratingDto);
   }
 
-  @Get('product/:productId')
-  async getRatingsForProduct(@Param('product_id') productId: number) {
-    return this.ratingService.getRatingsForProduct(productId);
+  @Get('product/:product_id')
+  async getRatingsForProduct(@Param('product_id') product_id: number) {
+    return this.ratingService.getRatingsForProduct(product_id);
+  }
+
+  @Get('product/:product_id/average')
+  async getAverageRatingForProduct(@Param('product_id') product_id: number) {
+    return this.ratingService.getAverageRatingForProduct(product_id);
   }
 }
