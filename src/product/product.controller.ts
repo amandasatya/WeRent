@@ -42,16 +42,12 @@ export class ProductController {
   @Patch(':product_id/upload-url')
   async uploadFileByUrl(
     @Param('product_id', ParseIntPipe) product_id: number,
-    @Body('url') imageUrl: string) {
-
-    console.log('URL uploaded:', imageUrl);
+    @Body('url') imageUrl: string
+  ) {
     try {
-      const imagePath = await this.productService.downloadImage(imageUrl);
-      const imageBuffer = await fs.promises.readFile(imagePath);
-      const base64String = imageBuffer.toString('base64');
-
+      const base64String = await this.productService.downloadImage(imageUrl);
       await this.productService.uploadFile(product_id, base64String, 'picture');
-
+  
       return { message: 'File uploaded successfully.' };
     } catch (error) {
       console.error('Upload file by URL error:', error);
