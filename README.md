@@ -110,7 +110,8 @@ $ npm run test:cov
 
 
 ## Documentation
-<h2 align="center"> PostgreSQL ERD</h2><img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/WeRent%20ERD.png?raw=true">
+<h2 align="center"> PostgreSQL ERD</h2><img src="https://github.com/amandasatya/WeRent/blob/03-table-review-dev/src/assets/WeRent%20ERD.png?raw=true">
+
 
 
 
