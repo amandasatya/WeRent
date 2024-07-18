@@ -86,10 +86,9 @@ $ npm run test:cov
 
 
 ## Documentation
-<p align="center">PostgreSQL ERD</p>
-<img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/WeRent%20ERD.png?raw=true">
-   
-Dockerhub Images <img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/Dockerhub%20Images.jpg?raw=true">
+<p align="center"> **PostgreSQL ERD** </p><img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/WeRent%20ERD.png?raw=true">
+
+<p align="center"> **Dockerhub Images** </p><img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/Dockerhub%20Images.jpg?raw=true">
 
 
 ## API Reference
