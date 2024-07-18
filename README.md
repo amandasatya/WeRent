@@ -32,9 +32,10 @@ $ npm install
      ```bash
      DATABASE_URL="postgresql://postgres:admin@localhost:5432/postgres"
      JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
-    ```
+     ```
     
    - Deployment:
+     
       ```bash
        DATABASE_URL="postgresql://postgres:12345678@database-1.c9oac4qi0j3d.ap-southeast-1.rds.amazonaws.com:5432/postgres"
        JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
