@@ -8,31 +8,27 @@ WeRent addresses issues such as complex user flows, unreliable product quality, 
 By implementing a user-friendly review page, WeRent enhances transparency and user trust, allowing potential renters to make informed decisions based on the feedback and experiences of previous users.
 
 ## Folder Structure
-
-    .
-    ├── build                   # Compiled files (alternatively `dist`)
-    ├── docs                    # Documentation files (alternatively `doc`)
-    ├── src                     # Source files (alternatively `lib` or `app`)
-    ├── test                    # Automated tests (alternatively `spec` or `tests`)
-    ├── tools                   # Tools and utilities
-    ├── LICENSE
-    └── README.md
  ```
- |-- FINALPROJECT/
- |   ├── .venv/
- |   ├── assets/
- |   ├── connectors/           # make connection to app.py and database, creating API
- |       └── mysql_connector.py
- |   ├── controllers/          # all query logics main code
- |   ├── decorators/           # my role checker logic
- |   ├── migrations/ 
- |   ├── models/               # my Base model and relationship between tables from database
- |   ├── tests/                # testing query code logic, role checker, and login required (jwt token).
- |   ├── validations/          # Schema to creating new data and UPDATE data. 
- |-- .env                      # pass code to access database and hosting.
- |-- app.py                    # all connected routes and load user placed here
- |-- requirements.py           # all dependencies I use stored here
- |-- Dockerfile                # code to docker deployment needs
+ |-- WeRent/
+ |   ├── Docker/                   # Docker configurations for containerization, images, etc.
+ |   ├── prisma/                   # Prisma ORM Configuration & Migrations
+ |   ├── src/                      # Source Code Directory
+ |       └── assets                # Documentation files (e.g., screenshot images)
+ |       └── authentication/       # Components related to app authentication
+ |       └── likes/                # Components related to likes pages
+ |       └── prisma/               # Prisma ORM configurations specific to src
+ |       └── product/              # Components related to Product pages
+ |       └── rating/               # Components related to product rating pages
+ |       └── reviews/              # Components related to review pages
+ |       └── user_product/         # Components related to user-product interactions pages
+ |       └── we-rent_test/         # Test files specific to the WeRent application
+ |       └── app.controller.ts     # Controller logic for handling HTTP requests
+ |       └── app.module.ts         # NestJS module where components are imported
+ |       └── app.service.ts        # Service layer for business logic
+ |       └── main.ts               # Bootstrap file, entry point of the application
+ |   ├── test/                     # Test directory for query logics and main code
+ |-- README.md                     # Readme file containing project documentation
+ |-- example.env                   # Example environment variables file
 ```
 
 ## Installation
