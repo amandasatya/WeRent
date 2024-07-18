@@ -14,7 +14,7 @@ By implementing a user-friendly review page, WeRent enhances transparency and us
  |   ├── prisma/                   # Prisma ORM Configuration & Migrations
  |   ├── src/                      # Source Code Directory
  |       └── assets                # Documentation files (e.g., screenshot images)
- |       └── authentication/       # Components related to app authentication
+ |       └── authentication/       # Components related to app authentication.
  |       └── likes/                # Components related to likes pages
  |       └── prisma/               # Prisma ORM configurations specific to src
  |       └── product/              # Components related to Product pages
@@ -123,33 +123,49 @@ $ npm run test:cov
 ```http
   POST /auth/register
 ```
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `username` | `string` | **Required & Unique**. |
-| `email` | `string` | **Required & Unique**. |
-| `password` | `string` | **Required & Unique**. |
+| Parameter  | Type     | Description                |
+| :--------  | :------- | :------------------------- |
+| `username` | `string` | **Required & Unique**.     |
+| `email`    | `string` | **Required & Unique**.     |
+| `password` | `string` | **Required & Unique**.     |
 
 #### User Login
 ```http
   POST /auth/login?email
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `email` | `string` | **Required & Unique**. |
-| `password` | `string` | **Required & Unique**. |
+| Parameter  | Type     | Description                       |
+| :--------  | :------- | :-------------------------------- |
+| `email`    | `string` | **Required & Unique**.            |
+| `password` | `string` | **Required & Unique**.            |
 
 #### Create A New Product Data
 ```http
   POST /product
 ```
+|     Parameter      |      Type      |              Description                |
+|:-------------------|:---------------| :-------------------------------------- |
+| `product_name`     | `string`       | **Required**.                           |
+| `product_desc`     | `string`       | **Required**.                           |
+| `sizes`            | `array[string]`| **Required**. **["S", "M", "L", "XL"]** |
+| `prices`           | `number`       | **Required**.                           |
+| `product_pictures` | `string`       | **Optional**. **Max File Size = 2MB**   |
+| `product_videos`   | `string`       | **Optional**. **Max File Size = 5MB**   |
+
+#### Add Product Picture using ID Product
+```http
+  PATCH /product/productID/upload-picture
+```
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `product_name` | `string` | **Required**. |
-| `product_desc` | `string` | **Required**. |
-| `sizes` | `array[string]` | **Required**. **["S", "M", "L", "XL"]** |
-| `prices` | `number` | **Required**. |
-| `product_pictures` | `string` | **Required**. |
-| `product_video` | `string` | **Required**. |
+| `product_pictures` | `string` | **Optional**. **Max File Size = 2MB** |
+
+#### Add Product Video using ID Product
+```http
+  PATCH /product/productID/upload-video
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `product_videos` | `string` | **Optional**. **Max File Size = 5MB** |
 
 #### Get All Product Data List
 ```http
@@ -171,8 +187,16 @@ $ npm run test:cov
 | `product_desc` | `string` | **Required**. |
 | `sizes` | `array[string]` | **Required**. **["S", "M", "L", "XL"]** |
 | `prices` | `number` | **Required**. |
-| `product_pictures` | `string` | **Required**. |
-| `product_video` | `string` | **Required**. |
+
+#### Delete Product Picture using ID Product
+```http
+  DELETE /product/:productID/delete-picture
+```
+
+#### Delete Product Video using ID Product
+```http
+  DELETE /product/:productID/delete-video
+```
 
 #### Delete A Product Data using Product ID
 ```http
@@ -185,10 +209,28 @@ $ npm run test:cov
 ```
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `product_id` | `number` | **Required**. |
-| `user_id` | `number` | **Required**. |
-| `description` | `string` | **Optional**. |
+| `product_id` | `number` | **Required**.                  |
+| `user_id` | `number` | **Required**.                     |
+| `description` | `string` | **Optional**.                 |
 | `fit_scale` | `string [enum]` | **Optional**. **["Small", "Fit", "Large"]**|
+| `review_pictures` | `string` | **Optional**. **Max File Size = 2MB** |
+| `review_video` | `string` | **Optional**. **Max File Size = 5MB** |
+
+#### Add Review Picture using ID Review
+```http
+  PATCH /reviews/reviewID/upload-picture
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `review_pictures` | `string` | **Optional**. **Max File Size = 2MB** |
+
+#### Add Product Video using ID Product
+```http
+  PATCH /review/reviewID/upload-video
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `review_videos` | `string` | **Optional**. **Max File Size = 5MB** |
 
 #### Get All Review Data List
 ```http
@@ -211,21 +253,30 @@ $ npm run test:cov
 | `description` | `string` | **Optional**. |
 | `fit_scale` | `string [enum]` | **Optional**. **["Small", "Fit", "Large"]**|
 
-
-#### Delete A Product Data using Product ID
+#### Delete A Review Data using Review ID
 ```http
   DELETE /reviewsID/:reviewsID
+```
+
+#### Delete Review Picture using ID Review
+```http
+  DELETE /reviews/:reviewsID/delete-picture
+```
+
+#### Delete Product Video using ID Review
+```http
+  DELETE /reviews/:reviewsID/delete-video
 ```
 
 #### Create Rating Data for Product
 ```http
   POST /rating/add
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `userId` | `number` | **Required** |
-| `productId` | `number` | **Required** |
-| `ratingValue` | `number` | **Required (Min = 1, Max = 5)** |
+| Parameter     | Type     | Description                       |
+| :--------     | :------- | :-------------------------------- |
+| `userId`      | `number` | **Required**                      |
+| `productId`   | `number` | **Required**                      |
+| `ratingValue` | `number` | **Required (Min = 1, Max = 5)**   |
 
 #### Get Product Rating using Product ID
 ```http
@@ -241,10 +292,10 @@ $ npm run test:cov
 ```http
   POST /likes
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `user_id` | `number` | **Required** |
-| `review_id` | `number` | **Required** |
+| Parameter   | Type     | Description                       |
+| :--------   | :------- | :-------------------------------- |
+| `user_id`   | `number` | **Required**                      |
+| `review_id` | `number` | **Required**                      |
 
 #### Get Like Count for Review Data using Review ID
 ```http
@@ -254,6 +305,29 @@ $ npm run test:cov
 #### Get Like Count for Review Data using User ID
 ```http
   GET /likes/review/reviewID
+```
+#### Create User-Product Data
+```http
+  POST /user-product
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `user_id` | `number` | **Required** |
+| `product_id` | `number` | **Required** |
+
+#### Get User-Product Data
+```http
+  GET /user-product
+```
+
+#### Get User-Product Data by Product ID
+```http
+  GET /user-product/userProductID/:productID
+```
+
+#### Delete User-Product Data by Product ID
+```http
+  DELETE /user-product/userProductID/:productID
 ```
 
 ## Deployment Link
