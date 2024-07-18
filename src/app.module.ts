@@ -13,6 +13,7 @@ import { PrismaService } from './prisma/prisma.service';
 import { UserProductModule } from './user_product/user_product.module';
 import { ConfigModule } from '@nestjs/config';
 import { LikeModule } from './likes/likes.module';
+import { WeRentTestModule } from './we-rent_test/we-rent_test.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,6 +31,7 @@ import { LikeModule } from './likes/likes.module';
       secret: process.env.JWT_SECRET_KEY,
       signOptions: { expiresIn: '60m' },
     }),
+    WeRentTestModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

@@ -9,7 +9,7 @@ import axios from 'axios';
 import * as dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import { Product } from '@prisma/client';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 
 dotenv.config()
@@ -83,6 +83,38 @@ export class ProductService {
       throw new HttpException('Failed to download image', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+
+  async deleteFile(product_id: number, type: 'picture' | 'video') {
+    const productFile = await this.prismaService.product.findUnique({
+      where: { product_id },
+    });
+
+    if(!productFile) {
+      throw new HttpException('File not found', HttpStatus.NOT_FOUND);
+    }
+
+    const fileUrl = type === 'picture' ? productFile.product_pictures : productFile.product_videos;
+    if(!fileUrl) {
+      throw new HttpException(`${type} not found`, HttpStatus.NOT_FOUND);
+    }
+
+    const fileName = fileUrl.split('/').pop();
+    await this.s3Client.send(
+      new DeleteObjectCommand({
+        Bucket: this.bucketName,
+        Key: fileName,
+      }),
+    );
+
+    const data = type === 'picture' ? {product_pictures : null} : {product_videos: null};
+    return this.prismaService.product.update({
+      where: {product_id},
+      data,
+    });
+
+  }
+
 
   async findAll() {
     return this.prismaService.product.findMany({
