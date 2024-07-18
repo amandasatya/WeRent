@@ -7,10 +7,13 @@ import {
   IsArray,
   ArrayNotEmpty,
   Validate,
+  Min,
+  Max,
 } from 'class-validator';
 import { serialize } from 'v8';
 import { Transform }  from 'class-transformer';
 import { MaxFileSize } from '../validator/size.validator';
+import { WeRentTest } from '../../we-rent_test/entities/we-rent_test.entity';
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -39,5 +42,11 @@ export class CreateProductDto {
   @IsString()
   @Validate(MaxFileSize, [5 * 1024 * 1024])
   product_videos?: string;
+
+  @IsNotEmpty()
+  @IsInt()
+  @Min(1)
+  @Max(10)
+  rent_duration: number;
 
 }

@@ -41,7 +41,7 @@ export class ProductService {
         sizes: { set: sizes },
         product_pictures: product_pictures ?? null,
         product_videos: product_videos ?? null,
-      
+
       },
     });
   }
