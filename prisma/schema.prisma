@@ -29,6 +29,7 @@ model Product {
   price            Int
   product_pictures String?
   product_videos   String?
+  rent_duration    Int
   created_at       DateTime      @default(now())
   updated_at       DateTime      @updatedAt
   ratings          Rating[]

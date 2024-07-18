@@ -316,34 +316,3 @@ $ npm run test:cov
   GET /likes/review/reviewID
 ```
 
-
-
-#### Create User-Product Data
-```http
-  POST /user-product
-```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `user_id` | `number` | **Required** |
-| `product_id` | `number` | **Required** |
-
-#### Get User-Product Data
-```http
-  GET /user-product
-```
-
-#### Get User-Product Data by Product ID
-```http
-  GET /user-product/userProductID/:productID
-```
-
-#### Delete User-Product Data by Product ID
-```http
-  DELETE /user-product/userProductID/:productID
-```
-
-## Deployment Link:
-### Backend Hosting using Railway: [WeRentApp](https://werent-production.up.railway.app/)
-
-
-### API Testing Documentation: [WeRentApp API Documentation](https://documenter.getpostman.com/view/32945632/2sA3kSmhrk)
