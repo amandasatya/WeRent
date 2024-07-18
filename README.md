@@ -86,7 +86,8 @@ $ npm run test:cov
 
 
 ## Documentation
-<img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/WeRent%20ERD.png?raw=true" align="center" alt="PostgreSQL ERD">
+<p align="center" alt="PostgreSQL ERD">
+<img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/WeRent%20ERD.png?raw=true">
 
 Dockerhub Images <img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/Dockerhub%20Images.jpg?raw=true">
 
