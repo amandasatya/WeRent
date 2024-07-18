@@ -24,7 +24,7 @@ $ npm install
 $ npm install -D prisma
 ```
 
- b. Initialize Prisma inside your Project:
+    b. Initialize Prisma inside your Project:
 ```bash
 $ npx prisma init
 ```
@@ -37,7 +37,7 @@ DATABASE_URL="postgresql://postgres:admin@localhost:5432/postgres"
 JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
 ```
 
-b. Deployment Link:
+    b. Deployment Link:
 ```bash
 DATABASE_URL="postgresql://postgres:12345678@database-1.c9oac4qi0j3d.ap-southeast-1.rds.amazonaws.com:5432/postgres"
 JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
