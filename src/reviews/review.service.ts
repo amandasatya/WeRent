@@ -134,6 +134,67 @@ export class ReviewService {
     return review;
   }
 
+  // async getAverageFitScaleByUserId(user_id: number): Promise<number> {
+  //   const reviews = await this.prisma.review.findMany({
+  //     where: { user_id },
+  //     select: { fit_scale: true },
+  //   });
+  
+  //   if (reviews.length === 0) {
+  //     return 0;
+  //   }
+  
+  //   const totalFitScale = reviews.reduce((sum, review) => {
+  //     switch (review.fit_scale) {
+  //       case 'Small':
+  //         return sum + 1;
+  //       case 'Fit':
+  //         return sum + 2;
+  //       case 'Large':
+  //         return sum + 3;
+  //       default:
+  //         return sum;
+  //     }
+  //   }, 0);
+  
+  //   return totalFitScale / reviews.length;
+  // }
+
+  async getAverageFitScaleByUserId(user_id: number): Promise<{ Small: number; Fit: number; Large: number }> {
+    const reviews = await this.prisma.review.findMany({
+      where: { user_id },
+      select: { fit_scale: true },
+    });
+
+    const fitScaleCounts = { Small: 0, Fit: 0, Large: 0 };
+    const fitScaleSums = { Small: 0, Fit: 0, Large: 0 };
+
+    reviews.forEach(review => {
+      switch (review.fit_scale) {
+        case 'Small':
+          fitScaleCounts.Small += 1;
+          fitScaleSums.Small += 1;
+          break;
+        case 'Fit':
+          fitScaleCounts.Fit += 1;
+          fitScaleSums.Fit += 2;
+          break;
+        case 'Large':
+          fitScaleCounts.Large += 1;
+          fitScaleSums.Large += 3;
+          break;
+      }
+    });
+
+    const averageFitScales = {
+      Small: fitScaleCounts.Small > 0 ? fitScaleSums.Small / fitScaleCounts.Small : 0,
+      Fit: fitScaleCounts.Fit > 0 ? fitScaleSums.Fit / fitScaleCounts.Fit : 0,
+      Large: fitScaleCounts.Large > 0 ? fitScaleSums.Large / fitScaleCounts.Large : 0,
+    };
+
+    return averageFitScales;
+  }
+  
   async updateReview(review_id: number, data: UpdateReviewDto): Promise<Review> {
     return this.prisma.review.update({
       where: { review_id },

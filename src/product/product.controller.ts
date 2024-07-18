@@ -31,8 +31,7 @@ export class ProductController {
   @ApiResponse({ status: 201, description: 'Successfully created product' })
   @ApiBadRequestResponse({status: 404, description: 'Invalid data'})
   @Post()
-  async create(
-    @Body() createProductDto: CreateProductDto) {
+  async create(@Body() createProductDto: CreateProductDto) {
       const result = await this.productService.create(createProductDto);
     return {
       statusCode: HttpStatus.CREATED,
@@ -40,8 +39,6 @@ export class ProductController {
       data: result,
     } ;
   }
-
-  
 
   @UseGuards(JwtAuthGuard)
   @Patch(':product_id/upload-picture')
@@ -97,8 +94,6 @@ export class ProductController {
     }
   }
 
-
-
   @Get()
   @HttpCode(HttpStatus.OK)
   @ApiResponse({ status: 201, description: 'Successfully get products' })
@@ -113,8 +108,6 @@ export class ProductController {
       data: result,
     };
   }
-
-
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
@@ -131,8 +124,6 @@ export class ProductController {
     };
   }
 
-
-
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
@@ -148,8 +139,6 @@ export class ProductController {
     };
   }
 
-
-
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -164,8 +153,6 @@ export class ProductController {
       data: result,
     };
   }
-
-
 
   @UseGuards(JwtAuthGuard)
   @Delete(':product_id/delete-picture')
@@ -186,8 +173,6 @@ export class ProductController {
       throw new HttpException(`Failed to delete picture: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
-
 
   @UseGuards(JwtAuthGuard)
   @Delete(':product_id/delete-video')
