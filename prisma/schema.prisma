@@ -42,7 +42,6 @@ model Review {
   user_id     Int
   description String
   fit_scale   Scale
-  
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   product     Product  @relation(fields: [product_id], references: [product_id])

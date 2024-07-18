@@ -1,11 +1,12 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, HttpCode, HttpStatus, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, HttpCode, HttpStatus, NotFoundException, UseInterceptors } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { Review } from '@prisma/client';
 import { CreateReviewDto } from './dto/review-create.dto';
 import { UpdateReviewDto } from './dto/review-update.dto';
 import { JwtAuthGuard } from 'src/authentication/guard/jwt_auth.guard';
 import { User } from '../authentication/user.decorator';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('reviews')
 export class ReviewController {
@@ -14,6 +15,7 @@ export class ReviewController {
   @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @UseInterceptors(AnyFilesInterceptor())
   async createReview(@Body() createReviewDto: CreateReviewDto, @User() user): Promise<Review> {
     return this.reviewService.createReview(createReviewDto, user);
   }

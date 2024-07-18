@@ -18,4 +18,5 @@ export class CreateReviewDto {
   @IsEnum(Scale)
   @IsOptional()
   fit_scale: Scale;
+
 }
