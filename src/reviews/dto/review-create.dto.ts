@@ -19,7 +19,7 @@ export class CreateReviewDto {
   @IsEnum(Scale)
   @IsOptional()
   fit_scale: Scale;
-
+  
   @IsOptional()
   @IsString()
   @Validate(MaxFileSize, [2 * 1024 * 1024])
