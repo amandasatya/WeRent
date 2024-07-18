@@ -17,8 +17,8 @@ By implementing a user-friendly review page, WeRent enhances transparency and us
     ├── tools                   # Tools and utilities
     ├── LICENSE
     └── README.md
-   .     
-     |-- FINALPROJECT/
+ ```
+ |-- FINALPROJECT/
  |   ├── .venv/
  |   ├── assets/
  |   ├── connectors/           # make connection to app.py and database, creating API
@@ -33,7 +33,7 @@ By implementing a user-friendly review page, WeRent enhances transparency and us
  |-- app.py                    # all connected routes and load user placed here
  |-- requirements.py           # all dependencies I use stored here
  |-- Dockerfile                # code to docker deployment needs
- 
+```
 
 ## Installation
 1. Clone the repository
