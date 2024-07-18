@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, HttpCode, HttpStatus, NotFoundException, Patch, UseInterceptors, HttpException, UploadedFile, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, HttpCode, HttpStatus, NotFoundException, Patch, UseInterceptors, HttpException, UploadedFile, ParseIntPipe, BadRequestException } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { Review } from '@prisma/client';
 import { CreateReviewDto } from './dto/review-create.dto';
@@ -16,8 +16,15 @@ export class ReviewController {
   @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async createReview(@Body() createReviewDto: CreateReviewDto): Promise<Review> {
-    return this.reviewService.createReview(createReviewDto);
+  @ApiResponse({ status: 201, description: 'Successfully created Review' })
+  @ApiBadRequestResponse({status: 404, description: 'Invalid data'})
+  async createReview(@Body() createReviewDto: CreateReviewDto) {
+    const result = await this.reviewService.createReview(createReviewDto)
+    return {
+      statusCode: HttpStatus.CREATED,
+      message: 'Data Review Successfully created!',
+      data: result
+    };
   }
 
   @UseGuards(JwtAuthGuard)
@@ -78,40 +85,75 @@ export class ReviewController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async getReviews(): Promise<Review[]> {
-    return this.reviewService.getReviews();
+  @ApiResponse({ status: 201, description: 'Get Review Success!' })
+  @ApiBadRequestResponse({status: 404, description: 'Data Not Found'})
+  async getReviews() {
+    const result = await this.reviewService.getReviews();
+    return {
+      statusCode: HttpStatus.OK,
+      message: "Get Review Success!",
+      data: result,
+    }
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async getReviewById(@Param('id') id: string): Promise<Review> {
+  @ApiResponse({ status: 201, description: 'Get Review by ID Success!' })
+  @ApiBadRequestResponse({status: 404, description: 'Not Found'})
+  async getReviewById(@Param('id') id: string){
     const review = await this.reviewService.getReviewById(+id);
     if(!review) {
       throw new NotFoundException("Review Not Found!");
     }
-    return review;
+    return {
+      statusCode: HttpStatus.OK,
+      message: "Get Review Success!",
+      data: review,
+    }
+  }
+
+  @Get('user/:user_id/average-fit-scale')
+  async getAverageFitScale(@Param('user_id') user_id: string) {
+    const id = parseInt(user_id, 10);
+    if (isNaN(id)) {
+      throw new BadRequestException('Invalid user ID');
+    }
+    const averageFitScale = await this.reviewService.getAverageFitScaleByUserId(id);
+    return { user_id: id, averageFitScale };
   }
 
   @UseGuards(JwtAuthGuard)
   @Put(':id')
   @HttpCode(HttpStatus.OK)
-  async updateReview(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto): Promise<Review> {
+  @ApiResponse({ status: 201, description: 'Update Success!' })
+  @ApiBadRequestResponse({status: 404, description: 'Not Found'})
+  async updateReview(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto){
     const review = await this.reviewService.updateReview(+id, updateReviewDto);
     if (!review) {
       throw new NotFoundException("Review Not Found!");
     }
-    return review;
+    return {
+      statusCode: HttpStatus.OK,
+      message: "Update Success!",
+      data: review,
+    }
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteReview(@Param('id') id: string): Promise<Review> {
+  @ApiResponse({ status: 201, description: 'Delete Success!' })
+  @ApiBadRequestResponse({status: 404, description: 'Not Found'})
+  async deleteReview(@Param('id') id: string) {
     const review = await this.reviewService.deleteReview(+id);
     if (!review) {
       throw new NotFoundException("Review Not Found!")
     }
-    return review;
+    return {
+      statusCode: HttpStatus.OK,
+      message: "Delete Data Review Success!",
+      data: review,
+    }
   }
 
   @UseGuards(JwtAuthGuard)
