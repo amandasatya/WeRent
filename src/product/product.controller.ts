@@ -19,13 +19,7 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from '../authentication/guard/jwt_auth.guard';
-import { ApiTags, ApiResponse, ApiBadRequestResponse, ApiUnauthorizedResponse, ApiBearerAuth} from '@nestjs/swagger';
-import { Product } from '@prisma/client';
-
-import * as fs from 'fs';
-import { join, dirname } from 'path';
-import { PricePipe } from './pipes/price.pipe';
-import { writeFile, mkdir } from 'fs/promises';
+import { ApiResponse, ApiBadRequestResponse } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('product')
