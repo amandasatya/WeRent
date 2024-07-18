@@ -233,4 +233,11 @@ $ npm run test:cov
 ```
 
 
+## Deployment Link
+
+To deploy this project:
+
+```bash
+  https://werent-production.up.railway.app/
+```
 
