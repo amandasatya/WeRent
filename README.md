@@ -232,10 +232,9 @@ $ npm run test:cov
   GET /likes/review/reviewID
 ```
 
-## Deployment Link
-This project has been deploy using Railway
-
+## Deployment Link:
+### Backend Hosting using Railway
 [WeRentApp](https://werent-production.up.railway.app/)
 
-  
-
+### API Testing Documentation
+[WeRentApp API Documentation](https://documenter.getpostman.com/view/32945632/2sA3kSmhrk)
