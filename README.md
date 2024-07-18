@@ -155,16 +155,16 @@ $ npm run test:cov
 ```http
   PATCH /product/productID/upload-picture
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
+| Parameter          | Type     | Description                           |
+| :------------------| :------- | :------------------------------------ |
 | `product_pictures` | `string` | **Optional**. **Max File Size = 2MB** |
 
 #### Add Product Video using ID Product
 ```http
   PATCH /product/productID/upload-video
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
+| Parameter        | Type     | Description                           |
+| :----------------| :------- | :------------------------------------ |
 | `product_videos` | `string` | **Optional**. **Max File Size = 5MB** |
 
 #### Get All Product Data List
@@ -177,16 +177,16 @@ $ npm run test:cov
   GET /product/:productID
 ```
 
-#### Update A Product Data using Product ID
+#### Update A Product Data using Product ID (Update a Specific Fields in Product Table using Product ID)
 ```http
   PATCH /product/productID
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `product_name` | `string` | **Required**. |
-| `product_desc` | `string` | **Required**. |
-| `sizes` | `array[string]` | **Required**. **["S", "M", "L", "XL"]** |
-| `prices` | `number` | **Required**. |
+|     Parameter      |      Type      |              Description                |
+|:-------------------|:---------------| :-------------------------------------- |
+| `product_name`     | `string`       | **Required**.                           |
+| `product_desc`     | `string`       | **Required**.                           |
+| `sizes`            | `array[string]`| **Required**. **["S", "M", "L", "XL"]** |
+| `prices`           | `number`       | **Required**.                           |
 
 #### Delete Product Picture using ID Product
 ```http
@@ -203,33 +203,35 @@ $ npm run test:cov
   DELETE /product/:productID
 ```
 
+
+
 #### Create A New Review for Product Data
 ```http
   POST /reviews
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `product_id` | `number` | **Required**.                  |
-| `user_id` | `number` | **Required**.                     |
-| `description` | `string` | **Optional**.                 |
-| `fit_scale` | `string [enum]` | **Optional**. **["Small", "Fit", "Large"]**|
-| `review_pictures` | `string` | **Optional**. **Max File Size = 2MB** |
-| `review_video` | `string` | **Optional**. **Max File Size = 5MB** |
+| Parameter         | Type            | Description                                |
+| :-----------------| :---------------| :----------------------------------------- |
+| `product_id`      | `number`        | **Required**.                              |
+| `user_id`         | `number`        | **Required**.                              |
+| `description`     | `string`        | **Optional**.                              |
+| `fit_scale`       | `string [enum]` | **Optional**. **["Small", "Fit", "Large"]**|
+| `review_pictures` | `string`        | **Optional**. **Max File Size = 2MB**      |
+| `review_video`    | `string`        | **Optional**. **Max File Size = 5MB**      |
 
 #### Add Review Picture using ID Review
 ```http
   PATCH /reviews/reviewID/upload-picture
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
+| Parameter         | Type     | Description                           |
+| :---------------- | :------- | :------------------------------------ |
 | `review_pictures` | `string` | **Optional**. **Max File Size = 2MB** |
 
 #### Add Product Video using ID Product
 ```http
   PATCH /review/reviewID/upload-video
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
+| Parameter       | Type     | Description                           |
+| :---------------| :------- | :--------------------------------     |
 | `review_videos` | `string` | **Optional**. **Max File Size = 5MB** |
 
 #### Get All Review Data List
@@ -246,12 +248,12 @@ $ npm run test:cov
 ```http
   PUT /reviews/reviewsID
 ```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `product_id` | `number` | **Required**. |
-| `user_id` | `number` | **Required**. |
-| `description` | `string` | **Optional**. |
-| `fit_scale` | `string [enum]` | **Optional**. **["Small", "Fit", "Large"]**|
+| Parameter     | Type            | Description                                |
+| :------------ | :---------------| :------------------------------------------|
+| `product_id`  | `number`        | **Required**.                              |
+| `user_id`     | `number`        | **Required**.                              |
+| `description` | `string`        | **Optional**.                              |
+| `fit_scale`   | `string [enum]` | **Optional**. **["Small", "Fit", "Large"]**|
 
 #### Delete A Review Data using Review ID
 ```http
@@ -267,6 +269,8 @@ $ npm run test:cov
 ```http
   DELETE /reviews/:reviewsID/delete-video
 ```
+
+
 
 #### Create Rating Data for Product
 ```http
@@ -288,6 +292,8 @@ $ npm run test:cov
   GET /rating/product/productID/average
 ```
 
+
+
 #### Create Like for Review Data
 ```http
   POST /likes
@@ -306,6 +312,9 @@ $ npm run test:cov
 ```http
   GET /likes/review/reviewID
 ```
+
+
+
 #### Create User-Product Data
 ```http
   POST /user-product
@@ -334,6 +343,3 @@ $ npm run test:cov
 This project has been deploy using Railway
 
 [WeRentApp](https://werent-production.up.railway.app/)
-
-  
-
