@@ -8,6 +8,7 @@ WeRent addresses issues such as complex user flows, unreliable product quality, 
 By implementing a user-friendly review page, WeRent enhances transparency and user trust, allowing potential renters to make informed decisions based on the feedback and experiences of previous users.
 
 ## Folder Structure
+
  |-- WeRent/
  |   ├── .venv/
  |   ├── assets/
@@ -23,6 +24,7 @@ By implementing a user-friendly review page, WeRent enhances transparency and us
  |-- app.py                    # all connected routes and load user placed here
  |-- requirements.py           # all dependencies I use stored here
  |-- Dockerfile                # code to docker deployment needs
+ 
 
 ## Installation
 1. Clone the repository
