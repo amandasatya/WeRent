@@ -18,37 +18,31 @@ $ npm install
 ```
 
 3. Set up Prisma
-
-    a. Install the Prisma CLI as a development dependency:
-```bash
-$ npm install -D prisma
-```
-
-    b. Initialize Prisma inside your Project:
-```bash
-$ npx prisma init
-```
+   - Install the Prisma CLI as a development dependency:
+     ```bash
+     $ npm install -D prisma
+     ```
+   - Initialize Prisma inside your Project:
+    ```bash
+    $ npx prisma init
+    ```
 
 4. Set environment variable:
-
-    a. Localhost:
-```bash
-DATABASE_URL="postgresql://postgres:admin@localhost:5432/postgres"
-JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
-```
-
-    b. Deployment Link:
-```bash
-DATABASE_URL="postgresql://postgres:12345678@database-1.c9oac4qi0j3d.ap-southeast-1.rds.amazonaws.com:5432/postgres"
-JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
-
-AWS_ACCESS_KEY_ID =your-id
-AWS_SECRET_ACCESS_KEY= your-secret-access-key
-AWS_BUCKET_NAME=YOUR-AWS-BUCKET-NAMES
-```
+   - Localhost:
+     ```bash
+     DATABASE_URL="postgresql://postgres:admin@localhost:5432/postgres"
+    JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
+    ```
+   - Deployment:
+    ```bash
+    DATABASE_URL="postgresql://postgres:12345678@database-1.c9oac4qi0j3d.ap-southeast-1.rds.amazonaws.com:5432/postgres"
+    JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
+    AWS_ACCESS_KEY_ID =your-id
+    AWS_SECRET_ACCESS_KEY= your-secret-access-key
+    AWS_BUCKET_NAME=YOUR-AWS-BUCKET-NAMES
+    ```
 
 ## Usage/Examples
-
 ### Running the App:
 
 ```bash
@@ -76,16 +70,15 @@ $ npm run test:cov
 
 ### Prisma Schema
  - Migrate the database
-```bash
-$ npx prisma migrate dev --name init
-```
+    ```bash
+    $ npx prisma migrate dev --name init
+    ```
  - Generate the database
- ```bash
- $ npx prisma generate
- ```
+     ```bash
+     $ npx prisma generate
+     ```
 
 ## Features
-
 - SQL Database = PostgreSQL
 - Postman API Documentation
 
