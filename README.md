@@ -31,7 +31,7 @@ $ npm install
    - Localhost:
      ```bash
      DATABASE_URL="postgresql://postgres:admin@localhost:5432/postgres"
-    JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
+     JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
     ```
     
    - Deployment:
@@ -42,9 +42,7 @@ $ npm install
        AWS_SECRET_ACCESS_KEY= your-secret-access-key
        AWS_BUCKET_NAME=YOUR-AWS-BUCKET-NAMES
        ```
-     
-      
-
+    
 ## Usage/Examples
 ### Running the App:
 
@@ -87,9 +85,9 @@ $ npm run test:cov
 
 
 ## Documentation
-[PostgreSQL ERD] <img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/WeRent%20ERD.png?raw=true">
+PostgreSQL ERD <img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/WeRent%20ERD.png?raw=true">
 
-[Dockerhub Images] <img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/Dockerhub%20Images.jpg?raw=true">
+Dockerhub Images <img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/Dockerhub%20Images.jpg?raw=true">
 
 
 ## API Reference
