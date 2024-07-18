@@ -117,6 +117,9 @@ $ npm run test:cov
 <h2 align="center">Dockerhub Images</h2><img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/Dockerhub%20Images.jpg?raw=true">
 
 
+<h2 align="center">AWS CLI</h2><img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/AWS%20CLI.jpg?raw=true">
+
+
 ## API Reference
 
 #### User Registration
