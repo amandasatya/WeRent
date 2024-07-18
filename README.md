@@ -343,9 +343,7 @@ $ npm run test:cov
 ```
 
 ## Deployment Link:
-### Backend Hosting using Railway
-[WeRentApp](https://werent-production.up.railway.app/)
+### Backend Hosting using Railway: [WeRentApp](https://werent-production.up.railway.app/)
 
 
-### API Testing Documentation
-[WeRentApp API Documentation](https://documenter.getpostman.com/view/32945632/2sA3kSmhrk)
+### API Testing Documentation: [WeRentApp API Documentation](https://documenter.getpostman.com/view/32945632/2sA3kSmhrk)
