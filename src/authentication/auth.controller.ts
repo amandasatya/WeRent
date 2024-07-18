@@ -20,7 +20,7 @@ export class AuthController {
 
       const result = await this.authService.register(username, email, password);
       return {
-        statudCode: HttpStatus.CREATED,
+        statusCode: HttpStatus.CREATED,
         message: 'Successfully registered',
         data: result,
       };
