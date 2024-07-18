@@ -1,38 +1,51 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# WeRent Project
+WeRent is an application aimed at simplifying and improving the process of renting clothes. WeRent is designed for individuals looking to rent clothes, including young professionals, fashion students, social media influencers, event planners, and travelers. The platform caters to users who value transparency, reliability, and ease of use in the clothing rental process.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+### Problem Statement
+WeRent addresses issues such as complex user flows, unreliable product quality, inaccurate product descriptions, and difficulties in assessing the condition of rental items. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Goals
+By implementing a user-friendly review page, WeRent enhances transparency and user trust, allowing potential renters to make informed decisions based on the feedback and experiences of previous users.
 
 ## Installation
-
+1. Clone the repository
+```bash
+git clone <repository_url>
+```
+2. Install Project Dependencies
 ```bash
 $ npm install
 ```
 
-## Running the app
+3. Set up Prisma
+   - Install the Prisma CLI as a development dependency:
+     ```bash
+     $ npm install -D prisma
+     ```
+   - Initialize Prisma inside your Project:
+       ```bash
+       $ npx prisma init
+       ```
+
+4. Set environment variable:
+   - Localhost:
+     ```bash
+     DATABASE_URL="postgresql://postgres:admin@localhost:5432/postgres"
+     JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
+     ```
+    
+   - Deployment:
+     
+      ```bash
+       DATABASE_URL="postgresql://postgres:12345678@database-1.c9oac4qi0j3d.ap-southeast-1.rds.amazonaws.com:5432/postgres"
+       JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
+       AWS_ACCESS_KEY_ID =your-id
+       AWS_SECRET_ACCESS_KEY= your-secret-access-key
+       AWS_BUCKET_NAME=YOUR-AWS-BUCKET-NAMES
+       ```
+    
+## Usage/Examples
+### Running the App:
 
 ```bash
 # development
@@ -45,8 +58,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
-
+### Test
 ```bash
 # unit tests
 $ npm run test
@@ -58,19 +70,172 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+### Prisma Schema
+ - Migrate the database
+    ```bash
+    $ npx prisma migrate dev --name init
+    ```
+ - Generate the database
+     ```bash
+     $ npx prisma generate
+     ```
+
+## Features
+- SQL Database = PostgreSQL
+- Postman API Documentation
 
 
-## Support
+## Documentation
+<h2 align="center"> PostgreSQL ERD</h2><img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/WeRent%20ERD.png?raw=true">
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+<h2 align="center">Dockerhub Images</h2><img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/Dockerhub%20Images.jpg?raw=true">
 
-## License
 
-Nest is [MIT licensed](LICENSE).
+## API Reference
+
+#### User Registration
+```http
+  POST /auth/register
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `username` | `string` | **Required & Unique**. |
+| `email` | `string` | **Required & Unique**. |
+| `password` | `string` | **Required & Unique**. |
+
+#### User Login
+```http
+  POST /auth/login?email
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `email` | `string` | **Required & Unique**. |
+| `password` | `string` | **Required & Unique**. |
+
+#### Create A New Product Data
+```http
+  POST /product
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `product_name` | `string` | **Required**. |
+| `product_desc` | `string` | **Required**. |
+| `sizes` | `array[string]` | **Required**. **["S", "M", "L", "XL"]** |
+| `prices` | `number` | **Required**. |
+| `product_pictures` | `string` | **Required**. |
+| `product_video` | `string` | **Required**. |
+
+#### Get All Product Data List
+```http
+  GET /product
+```
+
+#### Get All Product Data List with Product ID
+```http
+  GET /product/:productID
+```
+
+#### Update A Product Data using Product ID
+```http
+  PATCH /product/productID
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `product_name` | `string` | **Required**. |
+| `product_desc` | `string` | **Required**. |
+| `sizes` | `array[string]` | **Required**. **["S", "M", "L", "XL"]** |
+| `prices` | `number` | **Required**. |
+| `product_pictures` | `string` | **Required**. |
+| `product_video` | `string` | **Required**. |
+
+#### Delete A Product Data using Product ID
+```http
+  DELETE /product/:productID
+```
+
+#### Create A New Review for Product Data
+```http
+  POST /reviews
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `product_id` | `number` | **Required**. |
+| `user_id` | `number` | **Required**. |
+| `description` | `string` | **Optional**. |
+| `fit_scale` | `string [enum]` | **Optional**. **["Small", "Fit", "Large"]**|
+
+#### Get All Review Data List
+```http
+  GET /reviews
+```
+
+#### Get All Review Data List with Review ID
+```http
+  GET /reviews/:reviewsID
+```
+
+#### Update Review Data for Review Data using Review ID
+```http
+  PUT /reviews/reviewsID
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `product_id` | `number` | **Required**. |
+| `user_id` | `number` | **Required**. |
+| `description` | `string` | **Optional**. |
+| `fit_scale` | `string [enum]` | **Optional**. **["Small", "Fit", "Large"]**|
+
+
+#### Delete A Product Data using Product ID
+```http
+  DELETE /reviewsID/:reviewsID
+```
+
+#### Create Rating Data for Product
+```http
+  POST /rating/add
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `userId` | `number` | **Required** |
+| `productId` | `number` | **Required** |
+| `ratingValue` | `number` | **Required (Min = 1, Max = 5)** |
+
+#### Get Product Rating using Product ID
+```http
+  GET /rating/product/productID
+```
+
+#### Get Product Rating Average Data using Product ID
+```http
+  GET /rating/product/productID/average
+```
+
+#### Create Like for Review Data
+```http
+  POST /likes
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `user_id` | `number` | **Required** |
+| `review_id` | `number` | **Required** |
+
+#### Get Like Count for Review Data using Review ID
+```http
+  GET /likes/review/reviewID
+```
+
+#### Get Like Count for Review Data using User ID
+```http
+  GET /likes/review/reviewID
+```
+
+## Deployment Link
+This project has been deploy using Railway
+
+[WeRentApp](https://werent-production.up.railway.app/)
+
+  
 
