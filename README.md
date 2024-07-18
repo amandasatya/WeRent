@@ -10,7 +10,7 @@ By implementing a user-friendly review page, WeRent enhances transparency and us
 ## Installation
 1. Clone the repository
 ```bash
-git clone <repository_link>
+git clone <repository_url>
 ```
 2. Install Project Dependencies
 ```bash
