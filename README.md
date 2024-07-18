@@ -23,9 +23,9 @@ $ npm install
      $ npm install -D prisma
      ```
    - Initialize Prisma inside your Project:
-    ```bash
-    $ npx prisma init
-    ```
+       ```bash
+       $ npx prisma init
+       ```
 
 4. Set environment variable:
    - Localhost:
@@ -33,14 +33,17 @@ $ npm install
      DATABASE_URL="postgresql://postgres:admin@localhost:5432/postgres"
     JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
     ```
+    
    - Deployment:
-    ```bash
-    DATABASE_URL="postgresql://postgres:12345678@database-1.c9oac4qi0j3d.ap-southeast-1.rds.amazonaws.com:5432/postgres"
-    JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
-    AWS_ACCESS_KEY_ID =your-id
-    AWS_SECRET_ACCESS_KEY= your-secret-access-key
-    AWS_BUCKET_NAME=YOUR-AWS-BUCKET-NAMES
-    ```
+      ```bash
+       DATABASE_URL="postgresql://postgres:12345678@database-1.c9oac4qi0j3d.ap-southeast-1.rds.amazonaws.com:5432/postgres"
+       JWT_SECRET_KEY="YOUR-JWT-SECRET-KEY"
+       AWS_ACCESS_KEY_ID =your-id
+       AWS_SECRET_ACCESS_KEY= your-secret-access-key
+       AWS_BUCKET_NAME=YOUR-AWS-BUCKET-NAMES
+       ```
+     
+      
 
 ## Usage/Examples
 ### Running the App:
