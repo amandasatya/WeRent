@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { IsNotEmpty, IsString, IsEnum, IsInt, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsString, IsEnum, IsInt, IsOptional, Validate } from 'class-validator';
 import { Scale } from '@prisma/client';
+import { MaxFileSize } from 'src/product/validator/size.validator';
 
 export class CreateReviewDto {
   @IsInt()
@@ -18,5 +19,14 @@ export class CreateReviewDto {
   @IsEnum(Scale)
   @IsOptional()
   fit_scale: Scale;
+  
+  @IsOptional()
+  @IsString()
+  @Validate(MaxFileSize, [2 * 1024 * 1024])
+  review_pictures?: string;
 
+  @IsOptional()
+  @IsString()
+  @Validate(MaxFileSize, [5 * 1024 * 1024])
+  review_videos?: string;
 }
