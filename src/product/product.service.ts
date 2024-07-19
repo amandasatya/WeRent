@@ -52,7 +52,7 @@ export class ProductService {
 
     for (const base64String of base64Strings) {
       const buffer = Buffer.from(base64String, 'base64');
-      const fileName = `${uuidv4()}-${type}`;
+      const fileName = `${uuidv4()}.${type === 'picture' ? 'jpeg' : 'mp4'}`;
 
       await this.s3Client.send(
         new PutObjectCommand({

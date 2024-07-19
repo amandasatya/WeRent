@@ -9,12 +9,13 @@ import {
   Delete, 
   ParseIntPipe, 
   UseGuards, 
+  UploadedFiles,
   UploadedFile, 
   UseInterceptors, 
   HttpException, 
   HttpStatus,
   HttpCode } from '@nestjs/common';
-import { diskStorage } from 'multer';
+import { diskStorage, memoryStorage } from 'multer';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -42,11 +43,18 @@ export class ProductController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':product_id/upload-picture')
-  @UseInterceptors(FilesInterceptor('product_pictures', 5))
+  @UseInterceptors(FilesInterceptor('product_pictures', 5, {
+    storage: memoryStorage(),
+    fileFilter: (req, file, cb) => {
+      console.log('Received file:', file);
+      cb(null, true);
+    },
+}))
   async uploadFile(
     @Param('product_id', ParseIntPipe) product_id: number,
-    @UploadedFile() product_pictures: Express.Multer.File[]
+    @UploadedFiles() product_pictures: Express.Multer.File[]
   ) {
+    console.log('Files:', product_pictures); 
     try {
       if (!product_pictures || product_pictures.length === 0) {
         throw new HttpException('No Files Uploaded', HttpStatus.BAD_REQUEST);
