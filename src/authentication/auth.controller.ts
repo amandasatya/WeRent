@@ -7,6 +7,7 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  Get
 } from '@nestjs/common';
 import { JwtAuthGuard } from './guard/jwt_auth.guard';
 import {
@@ -70,4 +71,16 @@ export class AuthController {
       message: 'User successfully logged out',
     };
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: 200, description: 'User successfully logged in.' })
+  async me(@Req() req: any) {
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'User successfully logged in',
+      data: req.user,
+    };
+  } 
 }
