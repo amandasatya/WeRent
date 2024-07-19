@@ -120,6 +120,16 @@ $ npm run test:cov
 
 <h2 align="center">AWS CLI</h2><img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/AWS%20CLI.jpg?raw=true">
 
+<h2 align="center">DEPLOYMENT</h2>
+
+### This Project has been deploy using railway: [WeRent App](https://werent-production.up.railway.app)
+![WeRent App](image.png)
+
+<h2 align="center">API TEST DOCUMENTATION</h2>
+
+### The Postman API Collection: [WeRent API Collection](https://documenter.getpostman.com/view/32945632/2sA3kSmhrk)
+
+![alt text](image-1.png)
 
 ## API Reference
 
@@ -343,7 +353,3 @@ $ npm run test:cov
   GET /user-product/userID/productID
 ```
 
-## Deployment
-This Project has been deploy using railway: [WeRent App](https://werent-production.up.railway.app)
-
-The Postman API Collection: [WeRent API Collection](https://documenter.getpostman.com/view/32945632/2sA3kSmhrk)
