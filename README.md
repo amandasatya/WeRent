@@ -110,12 +110,12 @@ $ npm run test:cov
 
 
 ## Documentation
-<h2 align="center"> PostgreSQL ERD</h2><img src="https://github.com/amandasatya/WeRent/blob/03-table-review-dev/src/assets/WeRent%20ERD.png?raw=true">
-
+<h2 align="center"> PostgreSQL ERD</h2><img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/WeRent%20ERD.png?raw=true">
 
 
 
 <h2 align="center">Dockerhub Images</h2><img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/Dockerhub%20Images.jpg?raw=true">
+
 
 
 <h2 align="center">AWS CLI</h2><img src="https://github.com/amandasatya/WeRent/blob/main/src/assets/AWS%20CLI.jpg?raw=true">
@@ -316,3 +316,33 @@ $ npm run test:cov
 ```http
   GET /likes/review/reviewID
 ```
+
+#### Delete Data Like
+```http
+  DELETE /likes
+```
+
+
+
+#### Create User-Product Data
+```http
+  POST /user-product
+```
+| Parameter     | Type     | Description                       |
+| :--------     | :------- | :-------------------------------- |
+| `userId`      | `number` | **Required**                      |
+| `productId`   | `number` | **Required**                      |
+
+#### Get User-Product Data
+```http
+  GET /user-product
+```
+
+#### Get User-Product Data by Using User ID and Product ID
+```http
+  GET /user-product/userID/productID
+```
+
+## Deployment
+This Project has been deploy using railway: [WeRent App](https://werent-production.up.railway.app)
+The Postman API Collection: [WeRent API Collection](https://documenter.getpostman.com/view/32945632/2sA3kSmhrk)
