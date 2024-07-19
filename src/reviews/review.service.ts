@@ -109,6 +109,7 @@ export class ReviewService {
 
   async getReviews(): Promise<Review[]> {
     return this.prisma.review.findMany({
+      where: {deletedAt: null}, //To exclude soft-deleted for table reviews
       include: {
         product: true,
         likes: true,
@@ -119,7 +120,7 @@ export class ReviewService {
 
   async getReviewById(review_id: number): Promise<Review> {
     const review = await this.prisma.review.findUnique({
-      where: { review_id },
+      where: { review_id, deletedAt: null }, // add deletedAt to exclude soft-delete for table reviews
       include: {
         product: true,
         likes: true,
@@ -134,66 +135,41 @@ export class ReviewService {
     return review;
   }
 
-  // async getAverageFitScaleByUserId(user_id: number): Promise<number> {
+  // For Get AVG Fit SCALE logic
+  // async getAverageFitScaleByUserId(user_id: number): Promise<{ Small: number; Fit: number; Large: number }> {
   //   const reviews = await this.prisma.review.findMany({
   //     where: { user_id },
   //     select: { fit_scale: true },
   //   });
-  
-  //   if (reviews.length === 0) {
-  //     return 0;
-  //   }
-  
-  //   const totalFitScale = reviews.reduce((sum, review) => {
+
+  //   const fitScaleCounts = { Small: 0, Fit: 0, Large: 0 };
+  //   const fitScaleSums = { Small: 0, Fit: 0, Large: 0 };
+
+  //   reviews.forEach(review => {
   //     switch (review.fit_scale) {
   //       case 'Small':
-  //         return sum + 1;
+  //         fitScaleCounts.Small += 1;
+  //         fitScaleSums.Small += 1;
+  //         break;
   //       case 'Fit':
-  //         return sum + 2;
+  //         fitScaleCounts.Fit += 1;
+  //         fitScaleSums.Fit += 2;
+  //         break;
   //       case 'Large':
-  //         return sum + 3;
-  //       default:
-  //         return sum;
+  //         fitScaleCounts.Large += 1;
+  //         fitScaleSums.Large += 3;
+  //         break;
   //     }
-  //   }, 0);
-  
-  //   return totalFitScale / reviews.length;
+  //   });
+
+  //   const averageFitScales = {
+  //     Small: fitScaleCounts.Small > 0 ? fitScaleSums.Small / fitScaleCounts.Small : 0,
+  //     Fit: fitScaleCounts.Fit > 0 ? fitScaleSums.Fit / fitScaleCounts.Fit : 0,
+  //     Large: fitScaleCounts.Large > 0 ? fitScaleSums.Large / fitScaleCounts.Large : 0,
+  //   };
+
+  //   return averageFitScales;
   // }
-
-  async getAverageFitScaleByUserId(user_id: number): Promise<{ Small: number; Fit: number; Large: number }> {
-    const reviews = await this.prisma.review.findMany({
-      where: { user_id },
-      select: { fit_scale: true },
-    });
-
-    const fitScaleCounts = { Small: 0, Fit: 0, Large: 0 };
-    const fitScaleSums = { Small: 0, Fit: 0, Large: 0 };
-
-    reviews.forEach(review => {
-      switch (review.fit_scale) {
-        case 'Small':
-          fitScaleCounts.Small += 1;
-          fitScaleSums.Small += 1;
-          break;
-        case 'Fit':
-          fitScaleCounts.Fit += 1;
-          fitScaleSums.Fit += 2;
-          break;
-        case 'Large':
-          fitScaleCounts.Large += 1;
-          fitScaleSums.Large += 3;
-          break;
-      }
-    });
-
-    const averageFitScales = {
-      Small: fitScaleCounts.Small > 0 ? fitScaleSums.Small / fitScaleCounts.Small : 0,
-      Fit: fitScaleCounts.Fit > 0 ? fitScaleSums.Fit / fitScaleCounts.Fit : 0,
-      Large: fitScaleCounts.Large > 0 ? fitScaleSums.Large / fitScaleCounts.Large : 0,
-    };
-
-    return averageFitScales;
-  }
   
   async updateReview(review_id: number, data: UpdateReviewDto): Promise<Review> {
     return this.prisma.review.update({
@@ -207,17 +183,38 @@ export class ReviewService {
     });
   }
 
-  async deleteReview(review_id: number): Promise<Review> {
-    await this.prisma.like.deleteMany({
-      where: { review_id: review_id,},
+  // Normal Delete Code
+  // async deleteReview(review_id: number): Promise<Review> {
+  //   await this.prisma.like.deleteMany({
+  //     where: { review_id: review_id,},
+  //   });
+
+  //   try {
+  //     return await this.prisma.review.delete({
+  //       where: { review_id: review_id },
+  //     });
+  //   } catch (error) {
+  //     throw new NotFoundException(`Review with id ${review_id} not found`);
+  //   }
+  // }
+
+  //adding soft delete for Review
+  async deleteSoftReview(review_id: number): Promise<Review> {
+    const review = await this.prisma.review.findUnique({
+      where: { review_id },
     });
 
-    try {
-      return await this.prisma.review.delete({
-        where: { review_id: review_id },
-      });
-    } catch (error) {
+    if (!review) {
       throw new NotFoundException(`Review with id ${review_id} not found`);
     }
+
+    await this.prisma.like.deleteMany({
+      where: { review_id },
+    });
+
+    return this.prisma.review.update({
+      where: { review_id },
+      data: { deletedAt: new Date() },
+    });
   }
 }

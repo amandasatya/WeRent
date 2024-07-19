@@ -1,16 +1,17 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, HttpCode, HttpStatus, NotFoundException, Patch, UseInterceptors, HttpException, UploadedFile, ParseIntPipe, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, UseGuards, HttpCode, HttpStatus, NotFoundException, Patch, UseInterceptors, HttpException, UploadedFile, ParseIntPipe } from '@nestjs/common';
 import { ReviewService } from './review.service';
-import { Review } from '@prisma/client';
+// import { Review } from '@prisma/client';
 import { CreateReviewDto } from './dto/review-create.dto';
 import { UpdateReviewDto } from './dto/review-update.dto';
 import { JwtAuthGuard } from 'src/authentication/guard/jwt_auth.guard';
-import { User } from '../authentication/user.decorator';
+// import { User } from '../authentication/user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiResponse, ApiBadRequestResponse } from '@nestjs/swagger';
 
 @Controller('reviews')
 export class ReviewController {
+  prisma: any;
   constructor(private readonly reviewService: ReviewService) {}
 
   @UseGuards(JwtAuthGuard)
@@ -112,15 +113,15 @@ export class ReviewController {
     }
   }
 
-  @Get('user/:user_id/average-fit-scale')
-  async getAverageFitScale(@Param('user_id') user_id: string) {
-    const id = parseInt(user_id, 10);
-    if (isNaN(id)) {
-      throw new BadRequestException('Invalid user ID');
-    }
-    const averageFitScale = await this.reviewService.getAverageFitScaleByUserId(id);
-    return { user_id: id, averageFitScale };
-  }
+  // @Get('user/:user_id/average-fit-scale')
+  // async getAverageFitScale(@Param('user_id') user_id: string) {
+  //   const id = parseInt(user_id, 10);
+  //   if (isNaN(id)) {
+  //     throw new BadRequestException('Invalid user ID');
+  //   }
+  //   const averageFitScale = await this.reviewService.getAverageFitScaleByUserId(id);
+  //   return { user_id: id, averageFitScale };
+  // }
 
   @UseGuards(JwtAuthGuard)
   @Put(':id')
@@ -145,7 +146,7 @@ export class ReviewController {
   @ApiResponse({ status: 201, description: 'Delete Success!' })
   @ApiBadRequestResponse({status: 404, description: 'Not Found'})
   async deleteReview(@Param('id') id: string) {
-    const review = await this.reviewService.deleteReview(+id);
+    const review = await this.reviewService.deleteSoftReview(+id);
     if (!review) {
       throw new NotFoundException("Review Not Found!")
     }

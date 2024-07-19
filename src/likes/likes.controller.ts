@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Post, Delete, Get, Param, Body, BadRequestException, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { LikeService } from './likes.service';
 import { CreateLikeDto } from './dto/like-create.dto';
@@ -29,6 +30,13 @@ export class LikeController {
       throw new BadRequestException(error.message);
     }
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @HttpCode(HttpStatus.NO_CONTENT)
+  // @Delete('review/:review_id')
+  // async removeLikesByReview(@Param('review_id') review_id: number) {
+  //   return this.likeService.removeLikesByReview(review_id);
+  // }
 
   @Get('review/:reviewId')
   @HttpCode(HttpStatus.OK)
