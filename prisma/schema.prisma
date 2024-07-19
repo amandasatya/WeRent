@@ -27,7 +27,7 @@ model Product {
   product_desc     String
   sizes            String[]
   price            Int
-  product_pictures String?
+  product_pictures String[]
   product_videos   String?
   rent_duration    Int
 

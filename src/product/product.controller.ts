@@ -44,14 +44,14 @@ export class ProductController {
   @UseInterceptors(FileInterceptor('product_pictures'))
   async uploadFile(
     @Param('product_id', ParseIntPipe) product_id: number,
-    @UploadedFile() product_pictures: Express.Multer.File) {
-    console.log('File uploaded:', product_pictures);
+    @UploadedFile() product_pictures: Express.Multer.File[]) {
+
     try {
-      if (!product_pictures || !product_pictures.buffer) {
-        throw new HttpException('file or file buffer is undefined.', HttpStatus.BAD_REQUEST);
+      if (!product_pictures || product_pictures.length  === 0) {
+        throw new HttpException('No Files Uploaded', HttpStatus.BAD_REQUEST);
       }
 
-      const base64String = product_pictures.buffer.toString('base64');
+      const base64String = product_pictures.map((file) => file.buffer.toString('base64'));
       await this.productService.uploadFile(product_id, base64String, 'picture');
 
       return { 
@@ -71,14 +71,14 @@ export class ProductController {
   @UseInterceptors(FileInterceptor('product_videos'))
   async uploadVideo(
     @Param('product_id', ParseIntPipe) product_id: number,
-    @UploadedFile() product_videos: Express.Multer.File) {
+    @UploadedFile() product_videos: Express.Multer.File[]) {
     console.log('File uploaded:', product_videos);
     try {
-      if (!product_videos || !product_videos.buffer) {
+      if (!product_videos || product_videos.length === 0) {
         throw new HttpException('file or file buffer is undefined.', HttpStatus.BAD_REQUEST);
       }
 
-      const base64String = product_videos.buffer.toString('base64');
+      const base64String = product_videos.map((file) => file.buffer.toString('base64'));
       await this.productService.uploadFile(product_id, base64String, 'video');
 
       return { 

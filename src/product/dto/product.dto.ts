@@ -36,7 +36,7 @@ export class CreateProductDto {
   @IsOptional()
   @IsString()
   @Validate(MaxFileSize, [2 * 1024 * 1024])
-  product_pictures?: string;
+  product_pictures?: string[];
 
   @IsOptional()
   @IsString()
