@@ -14,12 +14,13 @@ import {
   HttpException, 
   HttpStatus,
   HttpCode } from '@nestjs/common';
+import { diskStorage } from 'multer';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from '../authentication/guard/jwt_auth.guard';
 import { ApiResponse, ApiBadRequestResponse } from '@nestjs/swagger';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('product')
 export class ProductController {
@@ -41,20 +42,20 @@ export class ProductController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':product_id/upload-picture')
-  @UseInterceptors(FileInterceptor('product_pictures'))
+  @UseInterceptors(FilesInterceptor('product_pictures', 5))
   async uploadFile(
     @Param('product_id', ParseIntPipe) product_id: number,
-    @UploadedFile() product_pictures: Express.Multer.File[]) {
-
+    @UploadedFile() product_pictures: Express.Multer.File[]
+  ) {
     try {
-      if (!product_pictures || product_pictures.length  === 0) {
+      if (!product_pictures || product_pictures.length === 0) {
         throw new HttpException('No Files Uploaded', HttpStatus.BAD_REQUEST);
       }
 
       const base64String = product_pictures.map((file) => file.buffer.toString('base64'));
       await this.productService.uploadFile(product_id, base64String, 'picture');
 
-      return { 
+      return {
         statusCode: HttpStatus.OK,
         message: 'File uploaded successfully.',
         data: base64String,
@@ -72,7 +73,7 @@ export class ProductController {
   async uploadVideo(
     @Param('product_id', ParseIntPipe) product_id: number,
     @UploadedFile() product_videos: Express.Multer.File[]) {
-    console.log('File uploaded:', product_videos);
+
     try {
       if (!product_videos || product_videos.length === 0) {
         throw new HttpException('file or file buffer is undefined.', HttpStatus.BAD_REQUEST);
