@@ -39,7 +39,7 @@ export class ProductService {
       data: {
         ...rest,
         sizes: { set: sizes },
-        product_pictures: product_pictures ?? null,
+        product_pictures: { set: product_pictures || []},
         product_videos: product_videos ?? null,
 
       },
@@ -47,21 +47,28 @@ export class ProductService {
   }
 
 
-  async uploadFile(product_id: number, base64String: string, type: 'picture' | 'video') {
-    const buffer = Buffer.from(base64String, 'base64');
-    const fileName = `${uuidv4()}-${type}`;
-    const uploadResult = await this.s3Client.send(
-      new PutObjectCommand({
-        Bucket: this.bucketName,
-        Key: fileName,
-        Body: buffer,
-        ContentEncoding: 'base64',
-        ContentType: type === 'picture' ? 'image/jpeg' : 'video/mp4',
-      }),
-    );
+  async uploadFile(product_id: number, base64Strings: string[], type: 'picture' | 'video') {
+    const fileUrls: string[] = [];
 
-    const fileUrl = `https://${this.bucketName}.s3.amazonaws.com/${fileName}`;
-    const data = type === 'picture' ? { product_pictures: fileUrl } : { product_videos: fileUrl };
+
+    for (const base64String of base64Strings) {
+
+      const buffer = Buffer.from(base64String, 'base64');
+      const fileName = `${uuidv4()}-${type}`;
+      const uploadResult = await this.s3Client.send(
+        new PutObjectCommand({
+          Bucket: this.bucketName,
+          Key: fileName,
+          Body: buffer,
+          ContentEncoding: 'base64',
+          ContentType: type === 'picture' ? 'image/jpeg' : 'video/mp4',
+        }),
+      );
+      const fileUrl = `https://${this.bucketName}.s3.amazonaws.com/${fileName}`;
+      fileUrls.push(fileUrl);
+    }
+
+    const data = type === 'picture' ? { product_pictures: { set: []} } : { product_videos: null};
 
     return this.prismaService.product.update({
       where: { product_id },
@@ -90,26 +97,24 @@ export class ProductService {
       where: { product_id },
     });
 
-    if(!productFile) {
+    if (!productFile) {
       throw new HttpException('File not found', HttpStatus.NOT_FOUND);
     }
 
-    const fileUrl = type === 'picture' ? productFile.product_pictures : productFile.product_videos;
-    if(!fileUrl) {
-      throw new HttpException(`${type} not found`, HttpStatus.NOT_FOUND);
+    const fileUrls = type === 'picture' ? productFile.product_pictures : [productFile.product_videos];
+    for (const fileUrl of fileUrls) {
+      const fileName = fileUrl.split('/').pop();
+      await this.s3Client.send(
+        new DeleteObjectCommand({
+          Bucket: this.bucketName,
+          Key: fileName,
+        }),
+      );
     }
 
-    const fileName = fileUrl.split('/').pop();
-    await this.s3Client.send(
-      new DeleteObjectCommand({
-        Bucket: this.bucketName,
-        Key: fileName,
-      }),
-    );
-
-    const data = type === 'picture' ? {product_pictures : null} : {product_videos: null};
+    const data = type === 'picture' ? { product_pictures: { set: [] } } : { product_videos: null };
     return this.prismaService.product.update({
-      where: {product_id},
+      where: { product_id },
       data,
     });
 
@@ -125,19 +130,6 @@ export class ProductService {
       },
     });
   }
-
-  // async findOne(id: number): Promise<Product> {
-  //   return this.prismaService.product.findFirst({
-  //     where: {
-  //       product_id: id,
-  //       deletedAt: null,
-  //     },
-  //     include: {
-  //       ratings: true,
-  //       reviews: true,
-  //     },
-  //   });
-  // }
 
   async findOne(product_id: number): Promise<Product> {
     const products = await this.prismaService.product.findUnique({
