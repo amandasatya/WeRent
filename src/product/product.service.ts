@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -118,21 +118,44 @@ export class ProductService {
 
   async findAll() {
     return this.prismaService.product.findMany({
+      where: { deletedAt: null },
       include: {
         ratings: true,
         reviews: true,
-      }
+      },
     });
   }
 
-  async findOne(id: number): Promise<Product> {
-    return this.prismaService.product.findUnique({
-      where: { product_id: id },
+  // async findOne(id: number): Promise<Product> {
+  //   return this.prismaService.product.findFirst({
+  //     where: {
+  //       product_id: id,
+  //       deletedAt: null,
+  //     },
+  //     include: {
+  //       ratings: true,
+  //       reviews: true,
+  //     },
+  //   });
+  // }
+
+  async findOne(product_id: number): Promise<Product> {
+    const products = await this.prismaService.product.findUnique({
+      where: {
+        product_id: product_id,
+        deletedAt: null,
+      },
       include: {
         ratings: true,
         reviews: true,
       }
     });
+
+    if (!products) {
+      throw new NotFoundException(`Review with id ${product_id} not found`);
+    }
+
+    return products;
   }
 
   async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
@@ -147,8 +170,9 @@ export class ProductService {
   }
 
   async remove(id: number): Promise<Product> {
-    return this.prismaService.product.delete({
+    return this.prismaService.product.update({
       where: { product_id: id },
+      data: { deletedAt: new Date() },
     });
   }
 }
