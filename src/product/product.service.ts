@@ -50,12 +50,11 @@ export class ProductService {
   async uploadFile(product_id: number, base64Strings: string[], type: 'picture' | 'video') {
     const fileUrls: string[] = [];
 
-
     for (const base64String of base64Strings) {
-
       const buffer = Buffer.from(base64String, 'base64');
       const fileName = `${uuidv4()}-${type}`;
-      const uploadResult = await this.s3Client.send(
+
+      await this.s3Client.send(
         new PutObjectCommand({
           Bucket: this.bucketName,
           Key: fileName,
@@ -68,14 +67,13 @@ export class ProductService {
       fileUrls.push(fileUrl);
     }
 
-    const data = type === 'picture' ? { product_pictures: { set: []} } : { product_videos: null};
+    const data = type === 'picture' ? { product_pictures: { set: fileUrls } } : { product_videos: fileUrls[0] };
 
     return this.prismaService.product.update({
       where: { product_id },
       data,
     });
   }
-
   async downloadImage(imageUrl: string): Promise<string> {
     try {
       const response = await axios({
@@ -93,7 +91,7 @@ export class ProductService {
 
 
   async deleteFile(product_id: number, type: 'picture' | 'video') {
-    const productFile = await this.prismaService.product.findUnique({
+     const productFile = await this.prismaService.product.findUnique({
       where: { product_id },
     });
 
@@ -117,7 +115,6 @@ export class ProductService {
       where: { product_id },
       data,
     });
-
   }
 
 
