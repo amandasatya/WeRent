@@ -46,7 +46,6 @@ export class ProductController {
   @UseInterceptors(FilesInterceptor('product_pictures', 5, {
     storage: memoryStorage(),
     fileFilter: (req, file, cb) => {
-      console.log('Received file:', file);
       cb(null, true);
     },
 }))
@@ -54,7 +53,7 @@ export class ProductController {
     @Param('product_id', ParseIntPipe) product_id: number,
     @UploadedFiles() product_pictures: Express.Multer.File[]
   ) {
-    console.log('Files:', product_pictures); 
+
     try {
       if (!product_pictures || product_pictures.length === 0) {
         throw new HttpException('No Files Uploaded', HttpStatus.BAD_REQUEST);
@@ -69,7 +68,6 @@ export class ProductController {
         data: base64String,
       };
     } catch (error) {
-      console.error('Upload file error:', error);
       throw new HttpException(`Failed to upload file: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -96,7 +94,6 @@ export class ProductController {
         data: base64String,
       };
     } catch (error) {
-      console.error('Upload file error:', error);
       throw new HttpException(`Failed to upload file: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -176,7 +173,6 @@ export class ProductController {
         data: null,
       };
     } catch (error) {
-      console.error('Delete picture error:', error);
       throw new HttpException(`Failed to delete picture: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -196,7 +192,6 @@ export class ProductController {
         data: null,
       };
     } catch (error) {
-      console.error('Delete video error:', error);
       throw new HttpException(`Failed to delete video: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

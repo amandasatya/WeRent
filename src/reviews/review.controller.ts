@@ -35,7 +35,6 @@ export class ReviewController {
     @Param('review_id', ParseIntPipe) review_id: number,
     @UploadedFile() review_pictures: Express.Multer.File 
   ) {
-    console.log('File Uploaded: ', review_pictures);
 
     try{
       if (!review_pictures || !review_pictures.buffer) {
@@ -52,7 +51,6 @@ export class ReviewController {
     };
   }
   catch (error) {
-    console.error('Upload file error:', error);
     throw new HttpException(`Failed to upload file: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR)
   }
 }
@@ -64,7 +62,6 @@ export class ReviewController {
     @Param('review_id', ParseIntPipe) review_id: number,
     @UploadedFile() review_videos: Express.Multer.File
   ) {
-    console.log('File uploaded:', review_videos);
 
     try{
       if (!review_videos || !review_videos.buffer) {
@@ -79,7 +76,6 @@ export class ReviewController {
       data: base64String,
     };
     } catch (error) {
-      console.error('Upload file error:', error);
       throw new HttpException(`Failed to upload file: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
@@ -172,7 +168,6 @@ export class ReviewController {
       };
     }
     catch (error){
-      console.error('Delete picture error:', error);
       throw new HttpException(`Failed to delete picture: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -192,7 +187,7 @@ export class ReviewController {
       };
     }
     catch(error) {
-      console.error('Delete video error:', error);
+
       throw new HttpException(`Failed to delete video: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

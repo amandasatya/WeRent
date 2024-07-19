@@ -20,7 +20,6 @@ export class ProductRatingService {
   }
 
   async getRatingsForProduct(product_id: number): Promise<Rating[]> {
-    console.log('Product ID:', product_id);
     return this.prisma.rating.findMany({
       where: {
         product_id: Number(product_id),
