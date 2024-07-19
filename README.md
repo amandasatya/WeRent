@@ -123,13 +123,13 @@ $ npm run test:cov
 <h2 align="center">DEPLOYMENT</h2>
 
 ### This Project has been deploy using railway: [WeRent App](https://werent-production.up.railway.app)
-![WeRent App](image.png)
+![WeRent App](readme_assets/image.png)
 
 <h2 align="center">API TEST DOCUMENTATION</h2>
 
 ### The Postman API Collection: [WeRent API Collection](https://documenter.getpostman.com/view/32945632/2sA3kSmhrk)
 
-![alt text](image-1.png)
+![alt text](readme_assets/image-1.png)
 
 ## API Reference
 
