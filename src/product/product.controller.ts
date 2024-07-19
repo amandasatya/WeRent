@@ -7,7 +7,6 @@ import {
   Patch, 
   Param, 
   Delete, 
-  UsePipes, 
   ParseIntPipe, 
   UseGuards, 
   UploadedFile, 
@@ -65,7 +64,6 @@ export class ProductController {
       throw new HttpException(`Failed to upload file: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
 
 
   @UseGuards(JwtAuthGuard)

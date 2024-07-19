@@ -45,6 +45,7 @@ model Review {
   fit_scale   Scale
   review_pictures String?
   review_videos   String?
+  deletedAt DateTime?  //for soft delete
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -88,6 +89,7 @@ model Like {
   like_id   Int @id @default(autoincrement())
   user_id   Int
   review_id Int
+  deletedAt DateTime?
 
   user   User   @relation(fields: [user_id], references: [id])
   review Review @relation(fields: [review_id], references: [review_id])
